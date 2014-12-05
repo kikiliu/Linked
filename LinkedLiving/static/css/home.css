@@ -1,0 +1,89 @@
+body {
+	margin: 0px 0px;
+	font-size: 16px;
+}
+
+.page_wrapper {
+	position: relative;
+    width: 900px;
+    background-color: beige;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-header {
+	background-color: pink;
+	color: white;
+	padding: 10px;
+	margin: 0;
+}
+
+/*Left of Dashboard*/
+
+.user_info {
+	float: left;
+	padding: 40px 40px;
+	border-right: solid 1px #777;
+	text-align: center;
+}
+
+.portrait {
+	width:132px;
+	height:132px;
+}
+.relatives .portrait{
+	width:66px;
+	height:66px;
+	/*round up the portrait*/
+}
+.link_icon {
+	width:20px;
+	height:20px;
+}
+
+.summary-container {
+	margin-left: 220px;
+}
+
+ul {
+	padding: 0;
+	list-style-type: none;
+}
+
+ul > li {
+	float: left;
+}
+
+.range-selector {
+	padding: 10px 40px;
+	overflow: auto;
+}
+.range-selector > ul > li {
+	width: 25%;
+	padding: 5px 15px;
+	color: #555;
+	font-size: 150%;
+	text-align: center;
+}
+
+.previous-selector {
+	position: absolute;
+	font-size: 200%;
+	left: 0;
+}
+
+.next-selector {
+	position: absolute;
+	font-size: 200%;
+	right: 0;
+}
+
+ul.metric_list > li {
+	padding: 5px 10px;
+	width: 30%;
+	text-align: center;
+}
+ul.metric_list > li:not(:last-child) {
+	border-right: solid 1px #777;
+}
+
