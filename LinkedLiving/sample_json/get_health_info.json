@@ -1,0 +1,15 @@
+{
+	"max_heart_rate": 110,
+	"max_heart_rate_status": 0,
+	"avg_heart_rate": 66,
+	"avg_heart_rate_status": 0,
+	"steps": 2101,
+	"steps_status": -2,
+	"distance": 800,
+	"distance_status": -2,
+	"exercise_time": 90,
+	"excrcise_status": 0,
+	"high_intensity_time": 30,
+	"low_intensity_time": 60,
+	"last_update": "2014-12-02 17:05:10"  
+}
