@@ -33,11 +33,12 @@ app.controller("health-info-controller", function($scope,$http){
   };
   
   function get_health_info_by_date(timestamp){
-    var url = "http://50.174.197.248:89/api/get_health_info";
+    var url = "http://127.0.0.1:8000/api/get_health_info";
     date = new Date(timestamp);
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
+    
     var request_parameters = {
       user_id:123,
       start_datetime:date.getTime(),
