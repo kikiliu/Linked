@@ -1,8 +1,12 @@
 from django.db import models
 from random import choice
 import datetime
+from email import email
+from bson.json_util import default
 
 class GearSensor(models.Model):
+    user = models.ForeignKey('UserInformation')
+    
     OUTDOOR = 'Outdoor'
     INDOOR = 'Indoor'
     STARTED = 'Started'
@@ -73,6 +77,73 @@ class GearSensor(models.Model):
     gps_accuracy = models.IntegerField()
     
     
+class UserInformation(models.Model):
+    email = models.EmailField()
+    password = models.CharField(max_length=15)
+    
+    user_name = models.CharField(max_length = 15)
+    
+    F = 'F'
+    M = 'M'
+    GENDER_CHOICES = (
+                      (F,'Female'),
+                      (M,'Male'),
+                      )
+    gender = models.CharField(max_length=1, 
+                              choices=GENDER_CHOICES)
+    bday = models.DateField()
+    
 
     
+
+class RelativeInformation(models.Model):
+    user = models.ForeignKey('UserInformation')
+    relative_name = models.CharField(max_length = 15)
     
+    CHILD = 'CH'
+    GRANDCHILD = 'GC'
+    SIBLING = 'SI'
+    OTHER = 'OR'
+    FRIEND = 'FR'
+    DOC = 'DO'
+    
+    RELATION_CHOICES = (
+                        (CHILD,'Child'),
+                        (GRANDCHILD,'Grandchild'),
+                        (SIBLING,'Sibling'),
+                        (OTHER, 'Other Relatives'),
+                        (FRIEND,'Friend'),
+                        (DOC, 'Doctor'),
+                        )
+    
+    relationship = models.CharField(max_length = 2,
+                                    choices = RELATION_CHOICES)
+    #Privacy-checkbox input
+    privacy_heartrate = models.BooleanField()
+    privacy_mobility = models.BooleanField()
+    privacy_exercise = models.BooleanField()
+    privacy_sleep = models.BooleanField()
+    privacy_hr_chart = models.BooleanField()
+    
+    
+class HealthConcern(models.Model):
+    user = models.ForeignKey('UserInformation')
+    
+    HEART = 'HT'
+    DIABETE = 'DI'
+    CHOLESTEROL = 'CH'
+    TOBACCO = 'TO'
+    OBESITY = 'OB'
+    TENSION = 'HT'
+    FAMILY = 'FH'
+    CONCERN_CHOICES = (
+                       (HEART,'kinds of heart disease'),
+                       (DIABETE, 'diabetes'),
+                       (CHOLESTEROL, 'high cholesterol'),
+                       (TOBACCO,'tobacco'),
+                       (OBESITY,'obesity'),
+                       (TENSION,'hypertension'),
+                       (FAMILY,'family history'),
+                       )
+    concern = models.CharField(max_length = 2,
+                               choices = CONCERN_CHOICES)
