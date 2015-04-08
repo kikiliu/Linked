@@ -92,14 +92,16 @@ class UserInformation(models.Model):
     gender = models.CharField(max_length=1, 
                               choices=GENDER_CHOICES)
     bday = models.DateField()
+    height = models.DecimalField(max_length = 5, decimal_places=2)
+    weight = models.DecimalField(max_length = 4, decimal_places=1)
     
 
     
 
 class RelativeInformation(models.Model):
     user = models.ForeignKey('UserInformation')
-    relative_name = models.CharField(max_length = 15)
-    
+    name = models.CharField(max_length = 15)
+    email = models.EmailField()
     CHILD = 'CH'
     GRANDCHILD = 'GC'
     SIBLING = 'SI'
@@ -119,31 +121,15 @@ class RelativeInformation(models.Model):
     relationship = models.CharField(max_length = 2,
                                     choices = RELATION_CHOICES)
     #Privacy-checkbox input
-    privacy_heartrate = models.BooleanField()
-    privacy_mobility = models.BooleanField()
-    privacy_exercise = models.BooleanField()
-    privacy_sleep = models.BooleanField()
+    privacy_dashboard = models.BooleanField()
+    privacy_narrative = models.BooleanField()
+
     privacy_hr_chart = models.BooleanField()
     
     
 class HealthConcern(models.Model):
+    name = models.CharField(max_length = 20)
+
+class UserConcernMapping(models.Model):
     user = models.ForeignKey('UserInformation')
-    
-    HEART = 'HT'
-    DIABETE = 'DI'
-    CHOLESTEROL = 'CH'
-    TOBACCO = 'TO'
-    OBESITY = 'OB'
-    TENSION = 'HT'
-    FAMILY = 'FH'
-    CONCERN_CHOICES = (
-                       (HEART,'kinds of heart disease'),
-                       (DIABETE, 'diabetes'),
-                       (CHOLESTEROL, 'high cholesterol'),
-                       (TOBACCO,'tobacco'),
-                       (OBESITY,'obesity'),
-                       (TENSION,'hypertension'),
-                       (FAMILY,'family history'),
-                       )
-    concern = models.CharField(max_length = 2,
-                               choices = CONCERN_CHOICES)
+    concern = models.ForeignKey('HealthConcern')
