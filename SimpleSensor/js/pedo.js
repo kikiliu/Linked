@@ -337,28 +337,49 @@
      
      
      function onIndoorBtnClick(){
-    	 console.log("Indoor Button Clicked")
+    	 console.log("Indoor Button Clicked");
     	 
     	 document.getElementById('walking-btn').style.visibility='visible';  
     	 document.getElementById('running-btn').style.visibility='visible';  
     	 document.getElementById('stopAct-btn').style.visibility='visible';  
     	 document.getElementById('sleep-btn').style.visibility='visible'; 
+    	 document.getElementById('yoga-btn').style.visibility='visible'; 
+    	 document.getElementById('cycling-btn').style.visibility='visible'; 
+    	 document.getElementById('weight-training-btn').style.visibility='visible'; 
+    	 document.getElementById('gym-exercise-btn').style.visibility='visible';     	 
     	 
     	 document.getElementById("mode").innerHTML = "Mode: Indoor";
     	 dataEntry["mode_record"] = "Indoor";
      }
      
      function onOutdoorBtnClick(){
-    	 console.log("Outdoor Button Clicked")
+    	 console.log("Outdoor Button Clicked");
 
     	 document.getElementById('walking-btn').style.visibility='visible';  
     	 document.getElementById('running-btn').style.visibility='visible';  
     	 document.getElementById('stopAct-btn').style.visibility='visible'; 
     	 document.getElementById('sleep-btn').style.visibility='visible'; 
+    	 document.getElementById('yoga-btn').style.visibility='visible'; 
+    	 document.getElementById('cycling-btn').style.visibility='visible'; 
+    	 document.getElementById('weight-training-btn').style.visibility='visible'; 
+    	 document.getElementById('gym-exercise-btn').style.visibility='visible'; 
+    	 
     	 
     	 
     	 document.getElementById("mode").innerHTML = "Mode: Outdoor";
     	 dataEntry["mode_record"] = "Outdoor";
+     }
+
+     
+     function resetActBtnColor(){
+    	 document.getElementById('walking-btn').style.backgroundColor ='lightgreen';  
+    	 document.getElementById('running-btn').style.backgroundColor ='lightgreen';  
+    	 document.getElementById('stopAct-btn').style.backgroundColor ='lightgreen'; 
+    	 document.getElementById('sleep-btn').style.backgroundColor ='lightgreen'; 
+    	 document.getElementById('yoga-btn').style.backgroundColor ='lightgreen'; 
+    	 document.getElementById('cycling-btn').style.backgroundColor ='lightgreen'; 
+    	 document.getElementById('weight-training-btn').style.backgroundColor ='lightgreen'; 
+    	 document.getElementById('gym-exercise-btn').style.backgroundColor ='lightgreen'; 
      }
      
      function onWalkingBtnClick(){
@@ -367,7 +388,8 @@
     	 document.getElementById("act_label").innerHTML = "Activity: Walking";
     	 
     	 dataEntry["activity_label"] = "Walking";
-    	 
+    	 resetActBtnColor();
+    	 document.getElementById('walking-btn').style.backgroundColor ='red';
      }
 
      function onRunningBtnClick(){
@@ -375,7 +397,8 @@
     	 
     	 document.getElementById("act_label").innerHTML = "Activity: Running";
     	 dataEntry["activity_label"] = "Running";
-    	 
+    	 resetActBtnColor();
+    	 document.getElementById('running-btn').style.backgroundColor ='red';    	 
      }     
 
      function onStopActBtnClick(){
@@ -383,16 +406,54 @@
     	 
     	 document.getElementById("act_label").innerHTML = "Activity: Stop";
     	 dataEntry["activity_label"] = "Stop";
-    	 
+    	 resetActBtnColor();
+    	 document.getElementById('stopAct-btn').style.backgroundColor ='red';      	 
      }       
      
      function onSleepBtnClick(){
     	 console.log("Sleep Button Clicked");
     	 
     	 document.getElementById("act_label").innerHTML = "Activity: Sleep";
-    	 dataEntry["activity_label"] = "Sleep";    	 
+    	 dataEntry["activity_label"] = "Sleep"; 
+    	 resetActBtnColor();
+    	 document.getElementById('sleep-btn').style.backgroundColor ='red';  
      }     
      
+     function onYogaBtnClick(){
+    	 console.log("Yoga Button Clicked");
+    	 
+    	 document.getElementById("act_label").innerHTML = "Activity: Yoga";
+    	 dataEntry["activity_label"] = "Yoga";   
+    	 resetActBtnColor();
+    	 document.getElementById('yoga-btn').style.backgroundColor ='red';  
+     }   
+     
+     function onCyclingBtnClick(){
+    	 console.log("Cycling Button Clicked");
+    	 
+    	 document.getElementById("act_label").innerHTML = "Activity: Cycling";
+    	 dataEntry["activity_label"] = "Cycling";    	 
+    	 resetActBtnColor();
+    	 document.getElementById('cycling-btn').style.backgroundColor ='red';  
+     }   
+ 
+     function onWeightTrainingBtnClick(){
+    	 console.log("Weight Training Button Clicked");
+    	 
+    	 document.getElementById("act_label").innerHTML = "Activity: Weight Training";
+    	 dataEntry["activity_label"] = "Weight Training";    	 
+    	 resetActBtnColor();
+    	 document.getElementById('weight-training-btn').style.backgroundColor ='red';  
+     }   
+     
+     function onGymExerciseBtnClick(){
+    	 console.log("Gym Exercise Button Clicked");
+    	 
+    	 document.getElementById("act_label").innerHTML = "Activity: Gym Exercise";
+    	 dataEntry["activity_label"] = "Gym Exercise";    	 
+    	 resetActBtnColor();
+    	 document.getElementById('gym-exercise-btn').style.backgroundColor ='red';  
+     }   
      
      function onStopAllBtnClick(){
     	 console.log("stop-all button clicked");
@@ -415,6 +476,10 @@
      	    document.getElementById('running-btn').style.visibility='hidden'; 
      	    document.getElementById('stopAct-btn').style.visibility='hidden'; 
      	    document.getElementById('sleep-btn').style.visibility='hidden';
+     	    document.getElementById('yoga-btn').style.visibility = 'hidden';
+     	    document.getElementById('cycling-btn').style.visibility = 'hidden';
+     	    document.getElementById('weight-training-btn').style.visibility = 'hidden';
+     	    document.getElementById('gym-exercise-btn').style.visibility = 'hidden';
      	    
      	}, 2000);
      }
@@ -455,12 +520,15 @@
 
      
      function onChangeAccelerometer(accData){ 
+
          document.getElementById("acc-x").innerHTML = 'Speed X : ' + Math.round(accData.acceleration.x * 10) / 10;
          dataEntry["accelerometer_x"] = Math.round(accData.acceleration.x * 10) / 10;
          document.getElementById("acc-y").innerHTML = 'Speed Y : '  + Math.round(accData.acceleration.y * 10) / 10;
          dataEntry["accelerometer_y"] = Math.round(accData.acceleration.y * 10) / 10;
          document.getElementById("acc-z").innerHTML = 'Speed Z : '  + Math.round(accData.acceleration.z * 10) / 10;
          dataEntry["accelerometer_z"] = Math.round(accData.acceleration.z * 10) / 10;
+//    	 console.log('Accelerometer_onchange: x: '+ dataEntry["accelerometer_x"]);
+     
      }    
      
      function bindEvents() {
@@ -470,6 +538,10 @@
              runningBtnEl = document.getElementById('running-btn'),
              stopActBtnEl = document.getElementById('stopAct-btn'),
              sleepBtnEl = document.getElementById('sleep-btn'),
+             yogaBtnEl = document.getElementById('yoga-btn'),
+             cyclingBtnEl = document.getElementById('cycling-btn'),
+             weightTrainingBtnEl = document.getElementById('weight-training-btn'),
+             gymExerciseBtnEl = document.getElementById('gym-exercise-btn'),
              
              stopAllBtnEl = document.getElementById('stop-all-btn'),
              resetAllBtnEl = document.getElementById('reset-all-btn'),
@@ -483,6 +555,10 @@
          runningBtnEl.addEventListener('click', onRunningBtnClick);
          stopActBtnEl.addEventListener('click', onStopActBtnClick);
          sleepBtnEl.addEventListener('click', onSleepBtnClick);
+         yogaBtnEl.addEventListener('click', onYogaBtnClick);
+         cyclingBtnEl.addEventListener('click', onCyclingBtnClick);
+         weightTrainingBtnEl.addEventListener('click', onWeightTrainingBtnClick);
+         gymExerciseBtnEl.addEventListener('click', onGymExerciseBtnClick);
          
          stopAllBtnEl.addEventListener('click', onStopAllBtnClick);
          resetAllBtnEl.addEventListener('click',onResetAllBtnClick);
