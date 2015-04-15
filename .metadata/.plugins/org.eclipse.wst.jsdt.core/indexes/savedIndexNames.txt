@@ -1,11 +1,8 @@
 INDEX VERSION 1.122+/Users/kiki/Google Drive/Berkeley/SensorClass/LinkedLiving/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
-3815675459.index
-519821491.index
 792871569.index
-1008134883.index
 3502898679.index
-913372848.index
-1528352947.index
 2074005893.index
 249032235.index
-1009375528.index
+1528352947.index
+913372848.index
+1008134883.index
