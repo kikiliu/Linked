@@ -1,3 +1,4 @@
+from __future__ import division
 from django.http import HttpResponse
 from django.http import HttpRequest
 from django.views.generic import View
@@ -6,9 +7,135 @@ from django.http import JsonResponse
 from LinkedLiving.models import GearSensor
 from django.db.models import Max
 from django.db.models import Avg
+import csv
+
+from datetime import datetime, timedelta
+
+
+def totimestamp(dt, epoch=datetime(1970,1,1)):
+    td = dt - epoch
+    # return td.total_seconds()
+    return int ((td.microseconds + (td.seconds + td.days * 86400) * 10**6) / 10**6)
+
+def todatetime(timestamp):
+    if timestamp == -1:
+        return None
+    else:
+        return datetime.fromtimestamp(int(timestamp))
+
+class GearData():
+    #load daily aggregation data
+    daily_aggre_data = []
+    with open("daily_aggre_table","rU") as f:
+        reader = csv.reader(f, delimiter="\t")
+        for line in reader:
+            raw_line = {}
+            raw_line['date'] = datetime.strptime(line[0], "%Y-%m-%d")
+            raw_line['daily_max_hr'] = line[1]
+            raw_line['daily_avg_hr_sleep'] = line[2]
+            raw_line['daily_avg_hr_rest'] = line[3]
+            raw_line['daily_hr_threshold_high'] = line[4]
+            raw_line['daily_hr_threshold_low'] = line[5]
+            raw_line['daily_exercise_mins'] = line[6]
+            raw_line['daily_sleep_hours'] = line[7]
+            raw_line['daily_intensive_exercise_mins'] = line[8]
+            daily_aggre_data.append(raw_line)
+    #load minutes aggregation data
+    minutes_aggre_data = []
+    with open("minutes_aggre_table","rU") as f:
+        reader = csv.reader(f, delimiter="\t")
+        for line in reader:
+            raw_line = {}
+            raw_line['date_time'] = datetime.strptime(line[0], "%Y-%m-%d %H:%M")
+            raw_line['mins_label'] = line[1]
+            raw_line['mins_max_hr'] = line[2]
+            raw_line['mins_avg_hr'] = line[3]
+            raw_line['mins_total_steps'] = line[4]
+            raw_line['mins_mannual_labels'] = line[5]
+            minutes_aggre_data.append(raw_line)
+    #load activity detection data
+    activity_detection_data = []
+    with open("activity_detection_table","rU") as f:
+        reader = csv.reader(f, delimiter="\t")
+        for line in reader:
+            raw_line = {}
+            raw_line['start_date_time'] = datetime.strptime(line[0], "%Y-%m-%d %H:%M")
+            raw_line['end_date_time'] = datetime.strptime(line[1], "%Y-%m-%d %H:%M")
+            raw_line['activity_label'] = line[2]
+            raw_line['duration_mins'] = line[3]
+            raw_line['max_hr'] = line[4]
+            raw_line['avg_hr'] = line[5]
+            raw_line['total_steps'] = line[6]
+            activity_detection_data.append(raw_line)    
+
+
+
+
+
+class GetActivityView(View):
+    def get(self, request, *args, **kwargs):
+        query_user = request.GET.get('user_id','-1')
+        query_start_date_time = todatetime(int(request.GET.get('start_datetime','-1')))
+        query_end_date_time = todatetime(int(request.GET.get('end_datetime','-1')))
+
+        response_data = []
+
+        return JsonResponse(response_data)
+
+class GetDailyView(View):
+    def get(self, request, *args, **kwargs):
+        query_user = request.GET.get('user_id','-1')
+        query_start_date_time = todatetime(int(request.GET.get('start_datetime','-1')))
+        query_end_date_time = todatetime(int(request.GET.get('end_datetime','-1')))
+
+
+        response_data = []
+
+        return JsonResponse(response_data)
+
+class GetTrendView(View):
+    def get(self, request, *args, **kwargs):
+        query_user = request.GET.get('user_id','-1')
+        query_start_date_time = todatetime(int(request.GET.get('start_datetime','-1')))
+        query_end_date_time = todatetime(int(request.GET.get('end_datetime','-1')))
+
+        if query_start_date_time != None:
+            target_start_date = query_start_date_time.date()
+        else:
+            target_start_date = todatetime(1).date()
+
+        if query_end_date_time != None:
+            target_end_date = query_end_date_time.date()
+        else:
+            target_end_date = datetime.now().date()
+
+        print target_start_date
+        print target_end_date
+
+        response_data = []
+
+        for entry in GearData.daily_aggre_data:
+            if entry['date'].date() >= target_start_date and entry['date'].date() <=target_end_date:
+                raw_entry = {}
+                raw_entry['time_stamp'] = totimestamp(entry['date'])
+                raw_entry['max_heart_rate'] = entry['daily_max_hr']
+                raw_entry['avg_hr_rest'] = entry['daily_avg_hr_rest']
+                raw_entry['avg_hr_sleep'] = entry['daily_avg_hr_sleep']
+                raw_entry['percent_of_time_above_high'] = entry['daily_hr_threshold_high']
+                raw_entry['percent_of_time_above_low'] = entry['daily_hr_threshold_low']
+                raw_entry['exercise_duration_minutes']  = entry['daily_exercise_mins']
+                raw_entry['sleep_duration_hours'] = entry['daily_sleep_hours']
+                raw_entry['intense_exercise_duration_minutes'] = entry['daily_intensive_exercise_mins']
+
+                response_data.append(raw_entry)
+        return JsonResponse(response_data)
 
 
 class GetHealthInfoView(View):
+    """
+    def __init__(self):
+        print GearData.minutes_aggre_data
+    """
     def get(self, request, *args, **kwargs):
     	query_user = request.GET.get('user_id','-1')
     	query_start_date_time = request.GET.get('start_datetime','-1')
