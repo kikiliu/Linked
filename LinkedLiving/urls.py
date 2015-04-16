@@ -13,8 +13,13 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^home$', TemplateView.as_view(template_name="home.html")),
+<<<<<<< HEAD
+    url(r'^trends$', TemplateView.as_view(template_name="trends.html")),
+    url(r'^api/get_health_info/$', GetHealthInfoView.as_view(), name='get-health-info-view') 
+=======
     url(r'^api/get_health_info/$', GetHealthInfoView.as_view(), name='get-health-info-view'), 
     url(r'^api/get_trend/$', GetTrendView.as_view(), name='get-trend-view'),
     url(r'^api/get_daily/$', GetDailyView.as_view(), name='get-daily-view'),
     url(r'^api/get_activity/$', GetActivityView.as_view(), name='get-activity-view')   
+>>>>>>> 39acd25662d566795bb74cce67dd5f6ff29ebcfb
 )
