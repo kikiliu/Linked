@@ -7,7 +7,7 @@
 <listEntry value="4"/>
 </listAttribute>
 <stringAttribute key="org.tizen.common.CONFIG_ATTR_PROJECT_NAME" value="SimpleSensor"/>
-<stringAttribute key="org.tizen.commonCONFIG_ATTR_DEVICE_SERIAL_NO" value="483a91004100f630"/>
+<stringAttribute key="org.tizen.commonCONFIG_ATTR_DEVICE_SERIAL_NO" value="442da1004100e2e0"/>
 <intAttribute key="org.tizen.web.zimlaunch.LATEST_LAUNCH_TYPE" value="3"/>
 <booleanAttribute key="org.tizen.web.zimlaunch.LIVE_EDITING" value="false"/>
 <intAttribute key="org.tizen.web.zimlaunch.TIMEOUT_VALUE" value="300"/>
