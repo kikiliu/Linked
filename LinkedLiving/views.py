@@ -82,14 +82,14 @@ class GearData():
         for line in reader:
             raw_line = {}
             raw_line['date'] = datetime.strptime(line[0], "%Y-%m-%d")
-            raw_line['daily_max_hr'] = line[1]
-            raw_line['daily_avg_hr_sleep'] = line[2]
-            raw_line['daily_avg_hr_rest'] = line[3]
-            raw_line['daily_hr_threshold_high'] = line[4]
-            raw_line['daily_hr_threshold_low'] = line[5]
-            raw_line['daily_exercise_mins'] = line[6]
-            raw_line['daily_sleep_hours'] = line[7]
-            raw_line['daily_intensive_exercise_mins'] = line[8]
+            raw_line['daily_max_hr'] = int(line[1])
+            raw_line['daily_avg_hr_sleep'] = int(line[2])
+            raw_line['daily_avg_hr_rest'] = int(line[3])
+            raw_line['daily_hr_threshold_high'] = float(line[4])
+            raw_line['daily_hr_threshold_low'] = float(line[5])
+            raw_line['daily_exercise_mins'] = int(line[6])
+            raw_line['daily_sleep_hours'] = float(line[7])
+            raw_line['daily_intensive_exercise_mins'] = int(line[8])
             daily_aggre_data.append(raw_line)
     #load minutes aggregation data
     minutes_aggre_data = []
@@ -258,10 +258,24 @@ class GetTrendView(View):
         else:
             target_end_date = datetime.now().date()
 
+        if (target_end_date - target_start_date).days < 7:
+            baseline_strategy = "avg" 
+        else:
+            baseline_strategy = "trend"
+
         print target_start_date
         print target_end_date
 
         response_data = []
+
+
+        def getBaseline(start_date,end_date, field):
+            total = []
+            for entry in GearData.daily_aggre_data:
+                if entry['date'].date() >= start_date and entry['date'].date() <=end_date:
+                    total.append(entry[field])
+            
+            return round(sum(total)/len(total),1)
 
         for entry in GearData.daily_aggre_data:
             if entry['date'].date() >= target_start_date and entry['date'].date() <=target_end_date:
@@ -275,6 +289,25 @@ class GetTrendView(View):
                 raw_entry['exercise_duration_minutes']  = entry['daily_exercise_mins']
                 raw_entry['sleep_duration_hours'] = entry['daily_sleep_hours']
                 raw_entry['intense_exercise_duration_minutes'] = entry['daily_intensive_exercise_mins']
+
+                # 7 day average
+                if baseline_strategy == 'trend':
+                    raw_entry['max_hr_baseline'] = getBaseline(todatetime(totimestamp(entry['date'])-6*86400).date(), entry['date'].date(),'daily_max_hr')
+                    raw_entry['avg_hr_rest_baseline'] = getBaseline(todatetime(totimestamp(entry['date'])-6*86400).date(), entry['date'].date(),'daily_avg_hr_rest')
+                    raw_entry['avg_hr_sleep_baseline'] = getBaseline(todatetime(totimestamp(entry['date'])-6*86400).date(), entry['date'].date(),'daily_avg_hr_sleep')
+                    raw_entry['percent_of_time_above_high_baseline'] = getBaseline(todatetime(totimestamp(entry['date'])-6*86400).date(), entry['date'].date(),'daily_hr_threshold_high')
+                    raw_entry['percent_of_time_above_low_baseline'] = getBaseline(todatetime(totimestamp(entry['date'])-6*86400).date(), entry['date'].date(),'daily_hr_threshold_low')
+                # less than 7 day average
+                elif baseline_strategy == 'avg':
+                    raw_entry['max_hr_baseline'] = getBaseline(target_start_date,target_end_date,'daily_max_hr')
+                    raw_entry['avg_hr_rest_baseline'] = getBaseline(target_start_date,target_end_date,'daily_avg_hr_rest')
+                    raw_entry['avg_hr_sleep_baseline'] = getBaseline(target_start_date,target_end_date,'daily_avg_hr_sleep')
+                    raw_entry['percent_of_time_above_high_baseline'] = getBaseline(target_start_date,target_end_date,'daily_hr_threshold_high')
+                    raw_entry['percent_of_time_above_low_baseline'] = getBaseline(target_start_date,target_end_date,'daily_hr_threshold_low')
+                
+                raw_entry['exercise_duration_minutes_baseline'] = 20
+                raw_entry['sleep_duration_hours_baseline'] = 7.5
+                raw_entry['intense_exercise_duration_minutes_baseline'] = 10
 
                 response_data.append(raw_entry)
         return JsonResponse({'table':response_data})
