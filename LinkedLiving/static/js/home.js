@@ -41,8 +41,8 @@ app.controller("health-info-controller", function($scope,$http){
     
     var request_parameters = {
       user_id:123,
-      start_datetime:date.getTime(),
-      end_datetime:date.getTime() + 24*60*60*1000-1
+      start_datetime:Math.round(date.getTime()/1000),
+      end_datetime:Math.round(date.getTime()/1000 + 24*60*60-1)
     };
   
     var options = {
