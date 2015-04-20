@@ -1,0 +1,106 @@
+body{
+  font-family:'Cabin';
+  color:#432F21;
+  font-size:18px;
+  text-align:center;/*For IE6 Shenanigans*/
+}
+
+.page {
+  width: 980px;
+  background-color: #432F21;
+  margin:0 auto;
+  text-align:left;
+}
+
+.header{
+  background-color: #D6D3C4;
+  /*border-bottom:solid 3px #f2a5cd;*/
+  overflow:hidden;/*content out of container*/
+  position:relative;
+  height: 80px;
+}
+
+.logo{
+  font-size:28px;
+  margin:22px;
+  float:left
+}
+
+.logo > *{
+    vertical-align: middle;
+}/*apply to immediate children*/
+
+ul{
+   list-style-type: none;
+   margin:0px;
+  padding:0px;
+}
+
+li{
+  display:block;  
+}
+.view-tabs
+{
+	display:table;
+	height:100%;
+	margin-left: 300px;
+}
+.tab{
+	font-size:18px;
+	display: table-cell;
+	vertical-align: middle;
+	padding:20px;
+}
+.active-tab {
+	background-color:#432F21;
+	color:#D6D3C4;
+}
+
+.menu{
+  font-size: 18px;
+  position:absolute;
+  right:0;
+  top:50%;
+  margin-top:-12px;/*font-size*50%*/
+}
+
+.menu >li {
+  /*border-left:solid 2px #4D4D4D;*/
+  padding:0px 30px;
+  display:inline;
+}
+
+.menu >li a{
+	color:#432F21;
+}
+
+/*.menu li:first-child{
+  border-left:none;
+}*/
+
+article{
+	padding:20px 20px 20px 20px;	
+}
+
+section{
+  background-color:#FFFFFF;
+
+  /*box-shadow: 2px 2px 2px #D2D2D2;*/
+}
+
+.selectors-title{
+	font-size:23px;
+	text-align:center;
+}
+
+.selectors{
+	height:250px;
+	
+}
+.selectors > li {
+	border-left: 1px solid #CDCAB9;
+	padding:20px;
+	float:left;
+	text-align:center;
+	width:293px;
+}

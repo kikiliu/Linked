@@ -5,89 +5,70 @@
 <script src="/static/js/home.js"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="/static/css/home.css">
+<link rel="stylesheet" type="text/css" href="/static/css/trends.css">
   <meta charset="utf-8">
-  <title>LinkedLiving-Trends</title>
+  <title>LinkedLiving</title>
 </head>
 <body>
   {% verbatim %}
   <div class="page">
-    <nav class="header" role="navigation">
+    <header class="header" role="navigation">
       <div class="logo">
         <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/cross.png"/>
         <span>LinkedLiving</span>
       </div>
+      <ul class="view-tabs">
+      	<li class="tab active-tab">Trends</li>
+      	<li class="tab">Daily Digest</li>
+      </ul>
       <ul class="menu">
         <li><a href="#">Help</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">My account</a></li>
       </ul>
-    </nav>
-    <section class="charts-selector" ng-controller="charts-selector-controller">
-    <div>I want to see:</div>
-    <div>
-    	<img scr=""/>
-    	<div></div>
-    	<div><span>Heart Rate (HR)</span><br/>
-    	<span><a href="">Select all</a>/<a href="">Deselect all</a></span></div>
-    </div>
-    
-      <ul class="range-selector">
-        <li type="button" class="btn btn-default">Daily</li>
-        <li type="button" class="btn btn-default">Weekly</li>
-        <li type="button" class="btn btn-default">Monthly</li>
-        <li type="button" class="btn btn-default">Annually</li>
-      </ul>
-      <div class="time-selector">
-        <div id="previous-selector" ng-click="goto_previous_day()"><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/prev.png"/></div>
-        <div class="datetime">{{current_date | date:'EEE, MMM d, yyyy'}}</div>
-        <div class="datetime">Last updated - {{health_info.last_update | date:'HH:mm'}}</div>
-        <div id="next-selector" ng-click="goto_next_day()"><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/next.png"/></div>
-      </div>
-      <ul class="reference">
-        <li><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/edit.png"/>Edit Targets</li>
-        <li><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/data_def.png"/>Data Definition</li>          
-      </ul>
-    </section>
-    <section class="activities" ng-controller="activities-controller">
-      <div class="timeline-top-bottom"></div>
-      <ul class="repeater">
-        <li ng-repeat="activity in activities">
-          <div class="time-range">
-            <div>{{activity.start_activity_time | date:'HH:mm'}}</div>
-            <div class="from-to" ng-if="activity.period">|</div>
-            <div>{{activity.end_activity_time | date:'HH:mm'}}</div>
-          </div>
-          <div class="activity">
-            <div class="background" style="background-image:url('{{activity.background_image}}')">
-              <div class="figure" style="background-image:url('{{activity.figure_image}}')">
-                <div class="story-line">
-                  <div>{{activity.caption}}</div>
-                  
-                </div>
-                <div class="activity-info"  ng-if="activity.info_display">
-                  <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/heart_mini.png"/>
-                    <div>
-                      Highest: {{activity.max_heart_rate}}</div>
-                    <div>Average: {{activity.avg_heart_rate}}</div>
-                                    <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/mobility_mini.png"/>
-                    <div>{{activity.steps}} steps</div>
-                    <div>Low intensity</div>
-                  
-                </div>
-              </div>
-           </div>
-           <div class="dash-gap">
-           </div>
-          </div>
-          
-        </li>
-
-        <div class="timeline-top-bottom"></div>
-      </ul>
-    </section>
-
-  <nav class="footer"></nav>
+    </header>
+    <article>
+	    <section>
+	    	<div class="selectors-title">I want to see:</div>
+	    	<ul class="selectors">
+	    		<li>
+	    			<img src="">
+	    			<div class="selector-title">Heart Rate (HR)</div>
+	    			<div class= "batch-selector">Select all / Deselect all</div>
+	    			<ul>
+	    				<li class="hr-selector">Average HR during sleep</li>
+	    				<li class="hr-selector">Time with HR above 180</li>
+	    				<li class="hr-selector">Time with HR above 100</li>
+	    				<li class="hr-selector">Average HR at rest</li>
+	    				<li class="hr-selector">Daily maximam HR</li>
+	    			</ul>
+	    		</li>
+	    		<li>
+	    			<img src="">
+	    			<div class="selector-title">Activities</div>
+	    			<div class= "batch-selector">Select all / Deselect all</div>
+	    			<ul>
+	    				<li class="activity-selector">Minutes of exercise</li>
+	    				<li class="activity-selector">Hours of sleep</li>
+	    				<li class="activity-selector">Minutes of intense exercise</li>
+	    			</ul>
+	    		</li>
+	    		<li>
+	    			<img src="">
+	    			<div class="selector-title">Period</div>
+	    			<ul>
+	    				<li class="time-selector">All</li>
+	    				<li class="time-selector">Last 1 week</li>
+	    				<li class="time-selector">Last 1 month</li>
+	    				<li class="time-selector">Customize</li>
+	    			</ul>
+	    			<div>From To</div>
+	    		</li>
+	    	</ul>
+	    	<div><img src="">arrow goes here</div>
+	    </section>
+	</article>
+  	<footer></footer>
   </div>
   {% endverbatim %}
 </body>

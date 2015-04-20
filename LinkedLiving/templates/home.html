@@ -12,156 +12,161 @@
 <body>
   {% verbatim %}
   <div class="page">
-    <nav class="header" role="navigation">
+    <header class="header" role="navigation">
       <div class="logo">
         <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/cross.png"/>
         <span>LinkedLiving</span>
       </div>
+      <ul class="view-tabs">
+      	<li class="tab active-tab">Trends</li>
+      	<li class="tab">Daily Digest</li>
+      </ul>
       <ul class="menu">
         <li><a href="#">Help</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">My account</a></li>
       </ul>
-    </nav>
-    <section class="user-info" ng-controller="user-info-controller">
-      <div class="user">
-        <img class="portrait" src="{{user_info.image}}"/>
-        <div class="name">{{user_info.name}}</div>
-        <div class="location">{{user_info.location}}</div>
-        <div class="local_time">{{user_info.local_time | date:'HH:mm'}}</div>
-      </div>
-      <ul class="relatives">
-        <li ng-repeat="relative in user_info.relatives">
-                  <img class="portrait" src="{{relative.image}}"/>
-        <div class="name">{{relative.name}}</div>
-        <div class="location">{{relative.location}}</div>
-        <div class="local_time">{{relative.local_time | date:'HH:mm'}}</div>
-                          <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/link.png"/>
-        </li>
-      </ul>
-      <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/more.png"/>
-    </section>
-    <section class="health-info" ng-controller="health-info-controller">
-      <ul class="range-selector">
-        <li type="button" class="btn btn-default">Daily</li>
-        <li type="button" class="btn btn-default">Weekly</li>
-        <li type="button" class="btn btn-default">Monthly</li>
-        <li type="button" class="btn btn-default">Annually</li>
-      </ul>
-      <div class="time-selector">
-        <div id="previous-selector" ng-click="goto_previous_day()"><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/prev.png"/></div>
-        <div class="datetime">{{current_date | date:'EEE, MMM d, yyyy'}}</div>
-        <div class="datetime">Last updated - {{health_info.last_update | date:'HH:mm'}}</div>
-        <div id="next-selector" ng-click="goto_next_day()"><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/next.png"/></div>
-      </div>
-      <ul class="health-summary">
-            <li>
-              <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/heart.png"/>
-              <div class="health-title">Heart Rate</div>
-              <ul>
-                <li>
-                  <div class="subtitle">Highest</div>
-                  <div class="indicator indicator-size                {{health_info.max_heart_rate_indicator}}">
-                    <div class="indicator-value">{{health_info.max_heart_rate}}</div>
-                    <div class="seperator">*</div>
-                    <div>{{health_info.max_heart_rate_target}} target</div>
-                  </div>
-                </li>
-                <li>
-                  <div class="subtitle">Average at rest</div>
-                  <div class="indicator indicator-size {{health_info.avg_heart_rate_indicator}}">
-                    <div class="indicator-value">{{health_info.avg_heart_rate}}</div>
-                    <div class="seperator">*</div>
-                    <div>{{health_info.avg_heart_rate_target}} target</div>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <li>
-            <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/mobility.png"/>
-              <div class="health-title">Overall Mobility</div>
-              <ul>
-                <li>
-                  <div class="subtitle">Total steps</div>
-                  <div class="indicator indicator-size {{health_info.steps_indicator}}">
-                    <div class="indicator-value">{{health_info.steps}}</div>
-                    <div class="seperator">*</div>
-                    <div>{{health_info.steps_target}} target</div>
-                  </div>
-                </li>
-                <li>
-                  <div class="subtitle">Total distance</div>
-                  <div class="indicator indicator-size {{health_info.distance_indicator}}">
-                    <div class="indicator-value">{{health_info.distance}}m</div>
-                    <div class="seperator">*</div>
-                    <div>{{health_info.distance_target}} target</div>
-                  </div>
-                </li>
-              </ul></li>
-            <li>
-                              <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/exercise.png"/>
-              <div class="health-title">Exercise</div>
-              <ul>
-                <li>
-
-                  <div class="subtitle">Total exercise time</div>
-                  <div class="indicator indicator-size {{health_info.exercise_indicator}}">
-                    <div class="indicator-value">{{health_info.exercise_time}}mins</div>
-                    <div class="seperator">*</div>
-                    <div>{{health_info.exercise_target}} target</div>
-                  </div>
-                </li>
-                <li>
-                  <div class="subtitle">Intensity</div>
-                  <div class="indicator" id="chartContainer">
-                  </div>
-                </li>
-              </ul></li>
-      </ul>
-      <ul class="reference">
-        <li><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/edit.png"/>Edit Targets</li>
-        <li><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/data_def.png"/>Data Definition</li>          
-      </ul>
-    </section>
-    <section class="activities" ng-controller="activities-controller">
-      <div class="timeline-top-bottom"></div>
-      <ul class="repeater">
-        <li ng-repeat="activity in activities">
-          <div class="time-range">
-            <div>{{activity.start_activity_time | date:'HH:mm'}}</div>
-            <div class="from-to" ng-if="activity.period">|</div>
-            <div>{{activity.end_activity_time | date:'HH:mm'}}</div>
-          </div>
-          <div class="activity">
-            <div class="background" style="background-image:url('{{activity.background_image}}')">
-              <div class="figure" style="background-image:url('{{activity.figure_image}}')">
-                <div class="story-line">
-                  <div>{{activity.caption}}</div>
-                  
-                </div>
-                <div class="activity-info"  ng-if="activity.info_display">
-                  <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/heart_mini.png"/>
-                    <div>
-                      Highest: {{activity.max_heart_rate}}</div>
-                    <div>Average: {{activity.avg_heart_rate}}</div>
-                                    <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/mobility_mini.png"/>
-                    <div>{{activity.steps}} steps</div>
-                    <div>Low intensity</div>
-                  
-                </div>
-              </div>
-           </div>
-           <div class="dash-gap">
-           </div>
-          </div>
-          
-        </li>
-
-        <div class="timeline-top-bottom"></div>
-      </ul>
-    </section>
-
-  <nav class="footer"></nav>
+    </header>
+    <article class="content">
+	    <section class="user-info" ng-controller="user-info-controller">
+	      <div class="user">
+	        <img class="portrait" src="{{user_info.image}}"/>
+	        <div class="name">{{user_info.name}}</div>
+	        <div class="location">{{user_info.location}}</div>
+	        <div class="local_time">{{user_info.local_time | date:'HH:mm'}}</div>
+	      </div>
+	      <ul class="relatives">
+	        <li ng-repeat="relative in user_info.relatives">
+	                  <img class="portrait" src="{{relative.image}}"/>
+	        <div class="name">{{relative.name}}</div>
+	        <div class="location">{{relative.location}}</div>
+	        <div class="local_time">{{relative.local_time | date:'HH:mm'}}</div>
+	                          <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/link.png"/>
+	        </li>
+	      </ul>
+	      <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/more.png"/>
+	    </section>
+	    <section class="health-info" ng-controller="health-info-controller">
+	      <ul class="range-selector">
+	        <li type="button" class="btn btn-default">Daily</li>
+	        <li type="button" class="btn btn-default">Weekly</li>
+	        <li type="button" class="btn btn-default">Monthly</li>
+	        <li type="button" class="btn btn-default">Annually</li>
+	      </ul>
+	      <div class="time-selector">
+	        <div id="previous-selector" ng-click="goto_previous_day()"><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/prev.png"/></div>
+	        <div class="datetime">{{current_date | date:'EEE, MMM d, yyyy'}}</div>
+	        <div class="datetime">Last updated - {{health_info.last_update | date:'HH:mm'}}</div>
+	        <div id="next-selector" ng-click="goto_next_day()"><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/next.png"/></div>
+	      </div>
+	      <ul class="health-summary">
+	            <li>
+	              <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/heart.png"/>
+	              <div class="health-title">Heart Rate</div>
+	              <ul>
+	                <li>
+	                  <div class="subtitle">Highest</div>
+	                  <div class="indicator indicator-size                {{health_info.max_heart_rate_indicator}}">
+	                    <div class="indicator-value">{{health_info.max_heart_rate}}</div>
+	                    <div class="seperator">*</div>
+	                    <div>{{health_info.max_heart_rate_target}} target</div>
+	                  </div>
+	                </li>
+	                <li>
+	                  <div class="subtitle">Average at rest</div>
+	                  <div class="indicator indicator-size {{health_info.avg_heart_rate_indicator}}">
+	                    <div class="indicator-value">{{health_info.avg_heart_rate}}</div>
+	                    <div class="seperator">*</div>
+	                    <div>{{health_info.avg_heart_rate_target}} target</div>
+	                  </div>
+	                </li>
+	              </ul>
+	            </li>
+	            <li>
+	            <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/mobility.png"/>
+	              <div class="health-title">Overall Mobility</div>
+	              <ul>
+	                <li>
+	                  <div class="subtitle">Total steps</div>
+	                  <div class="indicator indicator-size {{health_info.steps_indicator}}">
+	                    <div class="indicator-value">{{health_info.steps}}</div>
+	                    <div class="seperator">*</div>
+	                    <div>{{health_info.steps_target}} target</div>
+	                  </div>
+	                </li>
+	                <li>
+	                  <div class="subtitle">Total distance</div>
+	                  <div class="indicator indicator-size {{health_info.distance_indicator}}">
+	                    <div class="indicator-value">{{health_info.distance}}m</div>
+	                    <div class="seperator">*</div>
+	                    <div>{{health_info.distance_target}} target</div>
+	                  </div>
+	                </li>
+	              </ul></li>
+	            <li>
+	                              <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/exercise.png"/>
+	              <div class="health-title">Exercise</div>
+	              <ul>
+	                <li>
+	
+	                  <div class="subtitle">Total exercise time</div>
+	                  <div class="indicator indicator-size {{health_info.exercise_indicator}}">
+	                    <div class="indicator-value">{{health_info.exercise_time}}mins</div>
+	                    <div class="seperator">*</div>
+	                    <div>{{health_info.exercise_target}} target</div>
+	                  </div>
+	                </li>
+	                <li>
+	                  <div class="subtitle">Intensity</div>
+	                  <div class="indicator" id="chartContainer">
+	                  </div>
+	                </li>
+	              </ul></li>
+	      </ul>
+	      <ul class="reference">
+	        <li><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/edit.png"/>Edit Targets</li>
+	        <li><img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/data_def.png"/>Data Definition</li>          
+	      </ul>
+	    </section>
+	    <section class="activities" ng-controller="activities-controller">
+	      <div class="timeline-top-bottom"></div>
+	      <ul class="repeater">
+	        <li ng-repeat="activity in activities">
+	          <div class="time-range">
+	            <div>{{activity.start_activity_time | date:'HH:mm'}}</div>
+	            <div class="from-to" ng-if="activity.period">|</div>
+	            <div>{{activity.end_activity_time | date:'HH:mm'}}</div>
+	          </div>
+	          <div class="activity">
+	            <div class="background" style="background-image:url('{{activity.background_image}}')">
+	              <div class="figure" style="background-image:url('{{activity.figure_image}}')">
+	                <div class="story-line">
+	                  <div>{{activity.caption}}</div>
+	                  
+	                </div>
+	                <div class="activity-info"  ng-if="activity.info_display">
+	                  <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/heart_mini.png"/>
+	                    <div>
+	                      Highest: {{activity.max_heart_rate}}</div>
+	                    <div>Average: {{activity.avg_heart_rate}}</div>
+	                                    <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/mobility_mini.png"/>
+	                    <div>{{activity.steps}} steps</div>
+	                    <div>Low intensity</div>
+	                  
+	                </div>
+	              </div>
+	           </div>
+	           <div class="dash-gap">
+	           </div>
+	          </div>
+	          
+	        </li>
+	
+	        <div class="timeline-top-bottom"></div>
+	      </ul>
+	    </section>
+	</article>
+  	<footer></footer>
   </div>
   {% endverbatim %}
 </body>

@@ -399,4 +399,3 @@ class GetHealthInfoView(View):
         response_data['last_update'] = query_end_date_time.strftime("%Y-%m-%d") + " 11:50pm"
 
         return JsonResponse(response_data)
-
