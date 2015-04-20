@@ -305,11 +305,25 @@ class GetTrendView(View):
                     raw_entry['percent_of_time_above_high_baseline'] = getBaseline(target_start_date,target_end_date,'daily_hr_threshold_high')
                     raw_entry['percent_of_time_above_low_baseline'] = getBaseline(target_start_date,target_end_date,'daily_hr_threshold_low')
                 
+                # add activity target
                 raw_entry['exercise_duration_minutes_baseline'] = 20
                 raw_entry['sleep_duration_hours_baseline'] = 7.5
                 raw_entry['intense_exercise_duration_minutes_baseline'] = 10
 
+                # add total steps
+                total_steps = 0
+                for min_entry in GearData.minutes_aggre_data:
+                    timestamp = totimestamp(min_entry['date_time'])
+                    if todatetime(timestamp).date() == entry['date'].date():
+                        if min_entry['mins_label'] != 'NOT_MOVING':
+                            total_steps += int(min_entry['mins_total_steps'])
+                raw_entry['total_steps'] = total_steps
+                # add total steps target
+                raw_entry['total_steps_baseline'] = 2500
+
                 response_data.append(raw_entry)
+
+
         return JsonResponse({'table':response_data})
 
 
