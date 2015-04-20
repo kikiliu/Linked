@@ -29,43 +29,69 @@
     </header>
     <article>
 	    <section>
-	    	<div class="selectors-title">I want to see:</div>
-	    	<ul class="selectors">
-	    		<li>
-	    			<img src="">
-	    			<div class="selector-title">Heart Rate (HR)</div>
-	    			<div class= "batch-selector">Select all / Deselect all</div>
+	    <div id="columns">
+	    	<ul>
+	    		<li class="selector" id="heart-rate">
+	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/heart.gif">
+	    			<span class="selector-title">Heart Rate (HR)</span>
 	    			<ul>
-	    				<li class="hr-selector">Average HR during sleep</li>
-	    				<li class="hr-selector">Time with HR above 180</li>
-	    				<li class="hr-selector">Time with HR above 100</li>
-	    				<li class="hr-selector">Average HR at rest</li>
-	    				<li class="hr-selector">Daily maximam HR</li>
+	    				<li><span class="button">Average HR during sleep</span></li>
+	    				<li><span class="button">Time with HR above 180</span></li>
+	    				<li><span class="button">Time with HR above 100</span></li>
+	    				<li><span class="button">Average HR at rest</span></li>
+	    				<li><span class="button">Daily maximum HR</span></li>
+	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
 	    			</ul>
 	    		</li>
-	    		<li>
-	    			<img src="">
-	    			<div class="selector-title">Activities</div>
-	    			<div class= "batch-selector">Select all / Deselect all</div>
+	    		<li class="selector" id="activity">
+	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/run.gif">
+	    			<span class="selector-title">Activities</span>
 	    			<ul>
-	    				<li class="activity-selector">Minutes of exercise</li>
-	    				<li class="activity-selector">Hours of sleep</li>
-	    				<li class="activity-selector">Minutes of intense exercise</li>
+	    				<li><span class="button">Minutes of exercise</span></li>
+	    				<li><span class="button">Hours of sleep</span></li>
+	    				<li><span class="button">Minutes of intense exercise</span></li>
+	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
 	    			</ul>
 	    		</li>
-	    		<li>
-	    			<img src="">
-	    			<div class="selector-title">Period</div>
+	    		<li class="selector" id="mobility">
+	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/mobility.gif">
+	    			<span class="selector-title">Mobility</span>
 	    			<ul>
-	    				<li class="time-selector">All</li>
-	    				<li class="time-selector">Last 1 week</li>
-	    				<li class="time-selector">Last 1 month</li>
-	    				<li class="time-selector">Customize</li>
+	    				<li><span class="button">Number of steps</span></li>
 	    			</ul>
-	    			<div>From To</div>
 	    		</li>
 	    	</ul>
-	    	<div><img src="">arrow goes here</div>
+	    	</div>
+	    	<div id="time">
+	    		<div class="selector-title">
+	    		   <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/period.gif">
+	    			<span>Date Range</span>
+	    		</div>
+	    		<ul>
+	    			<li><span class="button">All</span></li>
+	    			<li><span class="button">Last 1 week</span></li>
+	    			<li><span class="button">Last 1 month</span></li>
+	    			<li><span class="button">Last 3 months</span></li>
+	   				<li id="customize">
+	   					<span class="button">Customize</span>
+	   					<span id="date-selector">From <input type="date" name="start-date"> To <input type="date" name="end-date"></span>
+	   			
+	   				</li>
+    			</ul>		
+	    	</div>
+	    	<div class="arrow {{status}}">
+	    		<span id="collapse">▲</span>
+	    		<span id="expand">▼</span>
+	    	</div>
+	    </section>
+	    <section id="all-charts">
+	    	<div>
+	    		
+	    	</div>
+			<div id="comments">
+				<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/howto.gif"/><span>How to interpret the data?</span>
+			</div>
+			<div class="placeholder"></div>
 	    </section>
 	</article>
   	<footer></footer>

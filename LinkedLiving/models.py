@@ -121,10 +121,10 @@ class RelativeInformation(models.Model):
     relationship = models.CharField(max_length = 2,
                                     choices = RELATION_CHOICES)
     #Privacy-checkbox input
-    privacy_dashboard = models.BooleanField()
-    privacy_narrative = models.BooleanField()
+    privacy_dashboard = models.BooleanField(default=True)
+    privacy_narrative = models.BooleanField(default=True)
 
-    privacy_hr_chart = models.BooleanField()
+    privacy_hr_chart = models.BooleanField(default=True)
     
     
 class HealthConcern(models.Model):
