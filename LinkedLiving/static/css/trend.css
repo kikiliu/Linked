@@ -126,7 +126,6 @@ section{
   	border-radius: 5px;
 	padding: 4px 10px;
   	font-size:18px;
-  	
 }
 
 #activity .button{
@@ -138,8 +137,7 @@ section{
 }
 
 #time .button{
-	border-color:#CDCAB9;
-	
+	border-color:#CDCAB9;	
 }
 
 #time{
@@ -154,55 +152,118 @@ section{
 }
 #time ul{
 	display:block;
-	text-align:center;
-	padding-top:24px;
+	text-align:left;
+	padding:24px 210px 0px 210px;
 }
 
 #time li{
 	display:inline;
-	
 }
 
 #customize{
-	position:relative;
-	
+	line-height:60px;
 }
 #date-selector{
-	position:absolute;
-	left:0;
+	/*left:0;
 	top:0;
+	position:relative;*/
 	text-align:left;
 	margin-top:30px;
 	margin-left:12px;
 	width:350px;
 }
 #date-selector input{
-	height:20px;
-	width:115px;
+	height:30px;
 	font-size:14px;
 }
 
 .arrow{
-	font-size:28px;
 	background-color:#D6D3C4;
-	opacity: 0.3;
 	text-align:center;
+	padding-top:10px;
+}
+#collapse, #expand{
+	font-size:28px;
+	opacity: 0.3;
 }
 
 #all-charts{
 	padding:35px 0px 60px 40px;
 	margin-top:20px;
+	overflow:auto;/*parent stretch to contain float child*/
 }
 
-#charts{
+
+.main-charts{
 	width:626px;
-	float:left;
 	text-align:left;
 }
-#comments{
+#side-note{
 	border-left: 1px solid #CDCAB9;
 	padding:0px 40px;
 	float:right;
 	text-align:left;
 	width:313px;
+}
+
+.side-title img{
+	float:left;
+	display:block;/*important for float and "not block" the whole line*/
+}
+
+.side-title-text{
+	padding-left:60px;
+	margin-bottom:30px;
+}
+
+#howto{
+	height:265px;
+}
+
+.hover-text{
+	color:#CDCAB9;
+}
+.comment-record{
+	clear:both;
+}
+
+.comment-record img{
+	height:55px;
+	width:55px;
+	border-radius:27px;
+}
+.comment-date, .comment-chart{
+	font-size:14px;
+}
+
+.comment-button {
+	text-align:right;
+	margin-top:30px;
+}
+
+#comment .button{
+	border-color:#CDCAB9;
+	background-color:#D6D3C4;
+}
+
+.add-comment{
+	margin-top:35px;
+	
+}
+.add-comment img{
+	height: 40px;
+	width:40px;
+	border-radius:20px;
+}
+
+#add-icon{
+	height:30px;
+	width:35px;
+	float:left;
+	padding-top:10px;
+	padding-right:15px;
+}
+
+.add-comment .hover-text{
+	padding-left:80px;
 }
