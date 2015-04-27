@@ -127,8 +127,8 @@ class GearData():
 class GetActivityView(View):
     def get(self, request, *args, **kwargs):
         query_user = request.GET.get('user_id','-1')
-        query_start_timestamp = int(request.GET.get('start_datetime','-1')) + timezone_offset
-        query_end_timestamp = int(request.GET.get('end_datetime','-1')) + timezone_offset
+        query_start_timestamp = int(request.GET.get('start_datetime','-1')) - timezone_offset
+        query_end_timestamp = int(request.GET.get('end_datetime','-1')) - timezone_offset
 
         response_data = []
 
