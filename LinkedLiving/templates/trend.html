@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html ng-app="LinkedLiving">
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.js"></script>
+<script src="/static/js/trend.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="/static/css/trend.css">
+  <meta charset="utf-8">
+  <title>LinkedLiving</title>
+</head>
+<body>
+  {% verbatim %}
+  <div class="page">
+    <header class="header" role="navigation">
+      <div class="logo">
+        <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/cross.png"/>
+        <span>LinkedLiving</span>
+      </div>
+      <ul class="view-tabs">
+      	<li class="tab">Daily Digest</li>
+      	<li class="tab active-tab">Trends</li>
+      </ul>
+      <ul class="menu">
+        <li><a href="#">Help</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">My account</a></li>
+      </ul>
+    </header>
+    <article class="trend-data" ng-controller="trend-data-controller">
+	    <section>
+	    <div id="columns">
+	    	<ul>
+	    		<li class="selector" id="heart-rate">
+	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/heart.gif">
+	    			<span class="selector-title">Heart Rate (HR)</span>
+	    			<ul>
+	    				<li><span class="button">Average HR during sleep</span></li>
+	    				<li><span class="button">Time with HR above 180</span></li>
+	    				<li><span class="button">Time with HR above 100</span></li>
+	    				<li><span class="button">Average HR at rest</span></li>
+	    				<li><span class="button">Daily maximum HR</span></li>
+	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
+	    			</ul>
+	    		</li>
+	    		<li class="selector" id="activity">
+	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/run.gif">
+	    			<span class="selector-title">Activities</span>
+	    			<ul>
+	    				<li><span class="button">Minutes of exercise</span></li>
+	    				<li><span class="button">Hours of sleep</span></li>
+	    				<li><span class="button">Minutes of intense exercise</span></li>
+	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
+	    			</ul>
+	    		</li>
+	    		<li class="selector" id="mobility">
+	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/mobility.gif">
+	    			<span class="selector-title">Mobility</span>
+	    			<ul>
+	    				<li><span class="button">Number of steps</span></li>
+	    			</ul>
+	    		</li>
+	    	</ul>
+	    	</div>
+	    	<div id="time">
+	    		<div class="selector-title">
+	    		   <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/period.gif">
+	    			<span>Date Range</span>
+	    		</div>
+	    		<ul>
+	    			<li><span class="button">All</span></li>
+	    			<li><span class="button">Last 1 week</span></li>
+	    			<li><span class="button">Last 1 month</span></li>
+	    			<li><span class="button">Last 3 months</span></li>
+	   				<li id="customize">
+	   					<span class="button">Customize</span>
+	   					<span id="date-selector">From <input type="date" name="start-date"> To <input type="date" name="end-date"></span>
+	   			
+	   				</li>
+    			</ul>		
+	    	</div>
+	    	<div class="arrow {{status}}">
+	    		<span id="collapse">▲</span>
+	    		<span id="expand">▼</span>
+	    	</div>
+	    </section>
+	    <section id="all-charts">
+	    	<div id="side-note">
+				<div id="howto">
+					<div class="side-title">
+						<img src="/static/images/howto.gif">
+						<div class="side-title-text">How can I interpret the data?</div>
+					</div>
+					<p class="hover-text">Hover the pointer over a graph of your interest.</p>
+					<p class="hide">A number of studies find that higher average heart rate during sleep is a cardiovascular risk factor.</p>
+				</div>
+				<div id="comment">
+					<div class="side-title">
+						<img src="/static/images/comment.gif">
+						<div class="side-title-text">Comments</div>
+					</div>
+					<ul>
+						<li class="comment-record">
+							<div class="side-title">
+								<img src="http://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/char_26725.jpg">
+								<div class="side-title-text">
+									<span class="comment-name">Meg said</span>
+									<span class="comment-date">on 1/13/2015</span>
+									<div class="comment-chart">on Average HR during Sleep</div>
+								</div>
+							</div>
+							<p>"Mom, I feel your heart rate during sleep may be improving a bit over time and it may be because you do more exercise recently."</p>
+							<div class="comment-button">
+								<span class="button">See this data</span>
+							</div>
+						</li>
+					</ul>
+					<div class="add-comment">
+						<img id="add-icon" src="/static/images/add.gif">
+						<div class="side-title">
+							<img src="http://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/char_26725.jpg">
+							<div class="hover-text">Add your comment</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	    	<div class="main-charts">
+		    	<ul>
+		    		<li>chart placeholder</li>
+		    		
+		    	</ul>
+	    	</div>
+
+	    </section>
+	</article>
+  	<footer></footer>
+  </div>
+  {% endverbatim %}
+</body>
+</html>

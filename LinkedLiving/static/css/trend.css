@@ -1,0 +1,269 @@
+body{
+  font-family:'Cabin';
+  color:#432F21;
+  font-size:18px;
+  text-align:center;/*For IE6 Shenanigans*/
+}
+
+.page {
+  width: 980px;
+  background-color: #432F21;
+  margin:0 auto;
+  text-align:left;
+}
+
+.header{
+  background-color: #D6D3C4;
+  /*border-bottom:solid 3px #f2a5cd;*/
+  overflow:hidden;/*content out of container*/
+  position:relative;
+  height: 80px;
+}
+
+.logo{
+  font-size:28px;
+  margin:22px;
+  float:left
+}
+
+.logo > *{
+    vertical-align: middle;
+}/*apply to immediate children*/
+
+ul{
+   list-style-type: none;
+   margin:0px;
+  padding:0px;
+}
+
+li{
+  display:block;  
+}
+.view-tabs
+{
+	display:table;
+	height:100%;
+	margin-left: 300px;
+}
+.tab{
+	font-size:18px;
+	display: table-cell;
+	vertical-align: middle;
+	padding:20px;
+}
+.active-tab {
+	background-color:#432F21;
+	color:#D6D3C4;
+}
+
+.menu{
+  font-size: 18px;
+  position:absolute;
+  right:0;
+  top:50%;
+  margin-top:-12px;/*font-size*50%*/
+}
+
+.menu >li {
+  /*border-left:solid 2px #4D4D4D;*/
+  padding:0px 30px;
+  display:inline;
+}
+
+.menu >li a{
+	color:#432F21;
+}
+
+/*.menu li:first-child{
+  border-left:none;
+}*/
+
+article{
+	padding:20px 20px 20px 20px;	
+}
+
+section{
+	background-color:#FFFFFF;
+}
+
+
+#columns{
+	overflow:auto;
+	margin-bottom:20px;
+	padding-top:20px;
+}
+#heart-rate{
+	border-left:none;
+}
+
+.selector {
+	border-left: 1px solid #CDCAB9;
+	padding:0px 40px;
+	float:left;
+	width:313px;
+	height:310px;
+	text-align:center;
+}
+
+.selector li{
+	display:block;
+	margin-top: 18px;
+	text-align: left;
+}
+.selector-title{
+	vertical-align:middle;
+	font-size:23px;
+}
+
+.batch-selector{
+	font-size:14px;
+	display:block;
+	padding-top:6px;
+}
+
+.button{
+	border: solid 3px #CF4858;
+  	border-radius: 5px;
+	padding: 4px 10px;
+  	font-size:18px;
+}
+
+#activity .button{
+	border-color: #16A79D;
+}
+
+#mobility .button{
+	border-color:#80628B;
+}
+
+#time .button{
+	border-color:#CDCAB9;	
+}
+
+#time{
+	background-color:#D6D3C4;
+	height:90px;
+}
+#time .selector-title{
+	margin-left:56px;
+	padding-top:20px;
+	position:absolute;
+	font-size:18px;
+}
+#time ul{
+	display:block;
+	text-align:left;
+	padding:24px 210px 0px 210px;
+}
+
+#time li{
+	display:inline;
+}
+
+#customize{
+	line-height:60px;
+}
+#date-selector{
+	/*left:0;
+	top:0;
+	position:relative;*/
+	text-align:left;
+	margin-top:30px;
+	margin-left:12px;
+	width:350px;
+}
+#date-selector input{
+	height:30px;
+	font-size:14px;
+}
+
+.arrow{
+	background-color:#D6D3C4;
+	text-align:center;
+	padding-top:10px;
+}
+#collapse, #expand{
+	font-size:28px;
+	opacity: 0.3;
+}
+
+#all-charts{
+	padding:35px 0px 60px 40px;
+	margin-top:20px;
+	overflow:auto;/*parent stretch to contain float child*/
+}
+
+
+.main-charts{
+	width:626px;
+	text-align:left;
+}
+#side-note{
+	border-left: 1px solid #CDCAB9;
+	padding:0px 40px;
+	float:right;
+	text-align:left;
+	width:313px;
+}
+
+.side-title img{
+	float:left;
+	display:block;/*important for float and "not block" the whole line*/
+}
+
+.side-title-text{
+	padding-left:60px;
+	margin-bottom:30px;
+}
+
+#howto{
+	height:265px;
+}
+
+.hover-text{
+	color:#CDCAB9;
+}
+.comment-record{
+	clear:both;
+}
+
+.comment-record img{
+	height:55px;
+	width:55px;
+	border-radius:27px;
+}
+.comment-date, .comment-chart{
+	font-size:14px;
+}
+
+.comment-button {
+	text-align:right;
+	margin-top:30px;
+}
+
+#comment .button{
+	border-color:#CDCAB9;
+	background-color:#D6D3C4;
+}
+
+.add-comment{
+	margin-top:35px;
+	
+}
+.add-comment img{
+	height: 40px;
+	width:40px;
+	border-radius:20px;
+}
+
+#add-icon{
+	height:30px;
+	width:35px;
+	float:left;
+	padding-top:10px;
+	padding-right:15px;
+}
+
+.add-comment .hover-text{
+	padding-left:80px;
+}
