@@ -137,7 +137,7 @@ section{
 }
 
 #time .button{
-	border-color:#CDCAB9;	
+	border-color:rgba(67,48,33,0.3);	
 }
 
 #time{
@@ -194,9 +194,29 @@ section{
 }
 
 
-.main-charts{
-	width:626px;
+#main-charts{
+	margin-right: 313px;
 	text-align:left;
+}
+
+.chart-title img{
+	height:23px;
+	width:23px;
+}
+
+.chart-title{
+	margin-top:35px;
+}
+#avg_hr_sleep_chart .chart-title{
+	margin-top:0px;
+}
+.chart-unit{
+	font-size:14px;
+}
+
+.chart-cancel{
+	float: right;
+  	margin-right: 80px;
 }
 #side-note{
 	border-left: 1px solid #CDCAB9;
@@ -242,7 +262,7 @@ section{
 }
 
 #comment .button{
-	border-color:#CDCAB9;
+	border-color:rgba(67,48,33,0.3);
 	background-color:#D6D3C4;
 }
 
@@ -260,10 +280,11 @@ section{
 	height:30px;
 	width:35px;
 	float:left;
-	padding-top:10px;
-	padding-right:15px;
+	padding-top:5px;
+	padding-right:10px;
 }
 
 .add-comment .hover-text{
 	padding-left:80px;
 }
+

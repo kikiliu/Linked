@@ -2,6 +2,7 @@
 <html ng-app="LinkedLiving">
 <head>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
 <script src="/static/js/trend.js"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
@@ -32,31 +33,37 @@
 	    <div id="columns">
 	    	<ul>
 	    		<li class="selector" id="heart-rate">
-	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/heart.gif">
+	    			<img src="/static/images/heart.gif">
 	    			<span class="selector-title">Heart Rate (HR)</span>
 	    			<ul>
-	    				<li><span class="button">Average HR during sleep</span></li>
-	    				<li><span class="button">Time with HR above 180</span></li>
+	    				<li ng-repeat="definition in hrdefinitions track by $index">
+	    					<input type="checkbox" class="button" ng-model="definition.toggle" ng-change="toggleChart(definition)" />
+	    					{{definition.label}}
+	    				</li>
 	    				<li><span class="button">Time with HR above 100</span></li>
-	    				<li><span class="button">Average HR at rest</span></li>
-	    				<li><span class="button">Daily maximum HR</span></li>
 	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
 	    			</ul>
 	    		</li>
 	    		<li class="selector" id="activity">
-	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/run.gif">
+	    			<img src="/static/images/run.gif">
 	    			<span class="selector-title">Activities</span>
 	    			<ul>
-	    				<li><span class="button">Minutes of exercise</span></li>
-	    				<li><span class="button">Hours of sleep</span></li>
+	    				<li ng-repeat="definition in activitiesdefinitions track by $index">
+	    					<input type="checkbox" class="button" ng-model="definition.toggle" ng-change="toggleChart(definition)" />
+	    					{{definition.label}}
+	    				</li>
 	    				<li><span class="button">Minutes of intense exercise</span></li>
 	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
 	    			</ul>
 	    		</li>
 	    		<li class="selector" id="mobility">
-	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/mobility.gif">
+	    			<img src="/static/images/mobility.gif">
 	    			<span class="selector-title">Mobility</span>
 	    			<ul>
+	    				<li ng-repeat="definition in mobilitydefinitions track by $index">
+	    					<input type="checkbox" class="button" ng-model="definition.toggle" ng-change="toggleChart(definition)" />
+	    					{{definition.label}}
+	    				</li>
 	    				<li><span class="button">Number of steps</span></li>
 	    			</ul>
 	    		</li>
@@ -68,13 +75,15 @@
 	    			<span>Date Range</span>
 	    		</div>
 	    		<ul>
-	    			<li><span class="button">All</span></li>
-	    			<li><span class="button">Last 1 week</span></li>
-	    			<li><span class="button">Last 1 month</span></li>
-	    			<li><span class="button">Last 3 months</span></li>
+	    			<li><input type="radio" class="button" value="all" ng-model="dateRange" ng-click="showDays(null)" />All</li>
+	    			<li><input type="radio" class="button" value="last7days" ng-model="dateRange" ng-click="showDays(7)" />Last 7 days</li>
+	    			<li><input type="radio" class="button" value="last30days" ng-model="dateRange" ng-click="showDays(30)" />Last 30 days</li>
+	    			<li><input type="radio" class="button" value="last90days" ng-model="dateRange" ng-click="showDays(90)" />Last 90 days</li>
 	   				<li id="customize">
-	   					<span class="button">Customize</span>
-	   					<span id="date-selector">From <input type="date" name="start-date"> To <input type="date" name="end-date"></span>
+	   					<input type="radio" class="button" value="customize" ng-model="dateRange" />Customize
+	   					<span id="date-selector" ng-show="dateRange=='customize'">
+	   					From <input type="date" ng-model="startDate" ng-change="showCustomizedDateRange()"> 
+	   					To <input type="date" ng-model="endDate" ng-change="showCustomizedDateRange()"></span>
 	   			
 	   				</li>
     			</ul>		
@@ -124,10 +133,91 @@
 					</div>
 				</div>
 			</div>
-	    	<div class="main-charts">
+	    	<div id="main-charts">
 		    	<ul>
-		    		<li>chart placeholder</li>
-		    		
+		    	<!--  
+		    		<li id="avg_hr_sleep_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/heart.gif">
+		    				<span>Average Heart Rate during Sleep</span>
+		    				<span class="chart-unit">(beats per minute)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div>
+		    			<div id="avg_hr_sleep"></div>
+		    		</li>
+		    		<li id="percent_of_time_above_high_chart">		    			
+		    			<div class="chart-title">
+		    				<img src="/static/images/heart.gif">
+		    				<span>Time with Heart Rate above 180 bpm</span>
+		    				<span class="chart-unit">(percentage of the day)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div> 
+		    			<div id="percent_of_time_above_high"></div>
+		    		</li>
+		    		<li id="percent_of_time_above_low_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/heart.gif">
+		    				<span>Time with Heart Rate above 100 bpm</span>
+		    				<span class="chart-unit">(percentage of the day)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div> 
+		    			<div  id="percent_of_time_above_low"></div>
+		    		</li>
+		    		<li id="avg_hr_rest_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/heart.gif">
+		    				<span>Average Heart Rate at Rest</span>
+		    				<span class="chart-unit">(beats per minute)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div>
+		    			<div id="avg_hr_rest"></div>		    		
+		    		</li>
+		    		<li id="max_hr_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/heart.gif">
+		    				<span>Daily Maximum Heart Rate</span>
+		    				<span class="chart-unit">(beats per minute)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div>
+		    			<div id="max_hr"></div>		    		
+		    		</li>
+		    		<li id="exercise_duration_minutes_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/run.gif">
+		    				<span>Exercise Time</span>
+		    				<span class="chart-unit">(minutes)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div>
+		    			<div id="exercise_duration_minutes"></div>	
+		    		</li>
+		    		<li id="sleep_duration_hours_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/run.gif">
+		    				<span>Sleep Time</span>
+		    				<span class="chart-unit">(hours)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div>
+		    			<div id="sleep_duration_hours"></div>			    		
+		    		</li>
+		    		<li id="intense_exercise_duration_minutes_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/run.gif">
+		    				<span>Intense Exercise Time</span>
+		    				<span class="chart-unit">(minutes)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div>
+		    			<div id="intense_exercise_duration_minutes"></div>			    		
+		    		</li>
+		    		<li id="total_steps_chart">
+		    			<div class="chart-title">
+		    				<img src="/static/images/mobility.gif">
+		    				<span>Total Steps</span>
+		    				<span class="chart-unit">(counts)</span>
+		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    			</div>
+		    			<div id="total_steps"></div>			    		
+		    		</li>
+		    		-->
 		    	</ul>
 	    	</div>
 
