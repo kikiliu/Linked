@@ -1,14 +1,14 @@
 
-#Call get_trend: 2015/04/01 00:00:00 to 2015/04/15 23:59:59
-http://127.0.0.1:8000/api/get_trend/?user_id=123&start_datetime=1427846400&end_datetime=1429142399
+#Call get_trend: 2015/04/01 00:00:00 (UTC) to 2015/04/15 23:59:59 (UTC)
+http://127.0.0.1:8000/api/get_trend/?user_id=123&start_datetime=1427871600&end_datetime=1429167599
 
-#Call get_daily: 2015/04/01 00:00:00 to 2015/04/01 23:59:59
-http://127.0.0.1:8000/api/get_daily/?user_id=123&start_datetime=1427846400&end_datetime=1427932799
+#Call get_daily: 2015/04/01 00:00:00 (UTC) to 2015/04/01 23:59:59 (UTC)
+http://127.0.0.1:8000/api/get_daily/?user_id=123&start_datetime=1427871600&end_datetime=1427957999
 
 
 # Call get_activity: 2015/04/01 00:00:00 to 2015/04/01 23:59:59
-http://127.0.0.1:8000/api/get_activity/?user_id=123&start_datetime=1427846400&end_datetime=1427932799
+http://127.0.0.1:8000/api/get_activity/?user_id=123&start_datetime=1427871600&end_datetime=1427957999
 
 # Call get_health_info 2015/04/01 00:00:00 to 2015/04/01 23:59:59
-http://127.0.0.1:8000/api/get_health_info/?user_id=123&start_datetime=1427846400&end_datetime=1427932799
+http://127.0.0.1:8000/api/get_health_info/?user_id=123&start_datetime=1427871600&end_datetime=1427957999
 
