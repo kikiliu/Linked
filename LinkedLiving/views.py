@@ -331,72 +331,120 @@ class GetTrendView(View):
 class GetHealthInfoView(View):
     def get(self, request, *args, **kwargs):
     	query_user = request.GET.get('user_id','-1')
-    	query_start_date_time = todatetime(int(request.GET.get('start_datetime','-1')))
-    	query_end_date_time = todatetime(int(request.GET.get('end_datetime','-1')))
+    	query_start_date_time = todatetime(int(request.GET.get('start_datetime','-1'))-timezone_offset)
+    	query_end_date_time = todatetime(int(request.GET.get('end_datetime','-1'))-timezone_offset)
 
     	response_data = {}
 
+
+        #avg_hr
+        avg_hr_weekly_total = []
         for entry in GearData.daily_aggre_data:
             if entry['date'].date() >= query_start_date_time.date() and entry['date'].date() <=query_end_date_time.date():
-                #max_hr
-                response_data['max_hr'] = entry['daily_max_hr']
-                #max_hr_status
-                if int(entry['daily_max_hr']) <= 180:
-                    response_data['max_hr_status'] = 3
-                elif int(entry['daily_max_hr']) <= 190:
-                    response_data['max_hr_status'] = 2
-                else:
-                    response_data['max_hr_status'] = 1
                 #avg_hr
                 response_data['avg_hr'] = entry['daily_avg_hr_rest']
-                #avg_hr_status
-                if int(entry['daily_avg_hr_rest']) < 50:
-                    response_data['avg_hr_status'] = 2
-                elif int(entry['daily_avg_hr_rest']) < 60:
-                    response_data['avg_hr_status'] = 1
-                elif int(entry['daily_avg_hr_rest']) >= 60 and int(entry['daily_avg_hr_rest']) <= 100:
-                    response_data['avg_hr_status'] = 3
-                elif int(entry['daily_avg_hr_rest']) <= 110:
-                    response_data['avg_hr_status'] = 4
-                else:
-                    response_data['avg_hr_status'] = 5
+
+            #avg_hr_weekly_benchmark
+            if ((query_start_date_time.date()-entry['date'].date()).days % 7 ==0) and (entry['date'].date() != query_start_date_time.date()):
+                avg_hr_weekly_total.append(int(entry['daily_avg_hr_rest']))
+        
+        #avg_hr_weekly_benchmark
+
+        if len(avg_hr_weekly_total) == 0:
+            response_data['avg_hr_weekly_benchmark'] = 0
+        else:
+            response_data['avg_hr_weekly_benchmark'] = sum(avg_hr_weekly_total)*1.0/len(avg_hr_weekly_total)
+        
+        #avg_hr_target
+        response_data['avg_hr_target'] = 80
+
         #total_steps
         total_steps = 0
+
+        total_steps_weekly_total = []
+        total_steps_weekly_date = []
         for entry in GearData.minutes_aggre_data:
             timestamp = totimestamp(entry['date_time'])
             if timestamp >= totimestamp(query_start_date_time) and timestamp <= totimestamp(query_end_date_time):
                 if entry['mins_label'] != 'NOT_MOVING':
                     total_steps += int(entry['mins_total_steps'])
+            if ((query_start_date_time.date() - todatetime(timestamp).date()).days % 7 == 0) and (todatetime(timestamp).date() != query_start_date_time.date() ):
+                total_steps_weekly_total.append(int(entry['mins_total_steps']))
+                total_steps_weekly_date.append(todatetime(timestamp).date())
         response_data['total_steps'] = total_steps
-
-        #steps_status
-        if total_steps < 1500:
-            response_data['steps_status'] = 2
-        elif total_steps < 2000:
-            response_data['steps_status'] = 1
+        #total_steps_weekly_benchmark
+        if len(set(total_steps_weekly_date)) == 0:
+            response_data['total_steps_weekly_benchmark'] = 0
         else:
-            response_data['steps_status'] = 3
+            response_data['total_steps_weekly_benchmark'] = sum(total_steps_weekly_total)/ len(set(total_steps_weekly_date))
 
-        #activity_steps and exercise_time
-        activity_steps = 0
+        #total_steps_target
+        response_data['total_steps_target'] = 2500
+
+
+        #exercise_time
         exercise_time = 0
+
+        exercise_time_weekly_total = []
+        exercise_time_weekly_date = []
         for entry in GearData.activity_detection_data:
             start_timestamp = totimestamp(entry['start_date_time'])
             end_timestamp = totimestamp(entry['end_date_time'])
             if start_timestamp >= totimestamp(query_start_date_time) and end_timestamp <= totimestamp(query_end_date_time):
                 if entry['activity_label'] != 'SLEEPING':
-                    activity_steps += int(entry['total_steps'])
                     exercise_time += int (entry['duration_mins'])
-        response_data['activity_steps'] = activity_steps
+            if ((query_start_date_time.date() - todatetime(start_timestamp).date()).days % 7 ==0) and (todatetime(start_timestamp).date() != query_start_date_time.date()):
+                if entry['activity_label'] != 'SLEEPING':
+                    exercise_time_weekly_total.append(int (entry['duration_mins']))
+                    exercise_time_weekly_date.append(todatetime(start_timestamp).date())
         response_data['exercise_time'] = exercise_time
 
-        #exercise_status
-        if exercise_time < 15:
-            response_data['exercise_status'] = 2
-        elif exercise_time < 20:
-            response_data['exercise_status'] = 1
+        #exercise_time_weekly_benchmark
+        if len(set(exercise_time_weekly_date)) == 0:
+            response_data['exercise_time_weekly_benchmark'] = 0
         else:
-            response_data['exercise_status'] = 3
-        response_data['last_update'] = query_end_date_time.strftime("%Y-%m-%d") + " 11:50pm"
+            response_data['exercise_time_weekly_benchmark'] = sum(exercise_time_weekly_total)/ len(set(exercise_time_weekly_date))
+        #exercise_time_target
+        response_data['exercise_time_target'] = 20
+
+
+        # story line:
+        if response_data['avg_hr'] == 0 or response_data['avg_hr_weekly_benchmark'] == 0:
+            response_data['avg_hr_storyline'] = "Not enough info."
+        else:
+            ratio = response_data['avg_hr']*1.0/ response_data['avg_hr_weekly_benchmark']
+
+            if ratio <0.9:
+                response_data['avg_hr_storyline'] = "Average heart rate is less than the average on XXX"
+            elif ratio > 1.1:
+                response_data['avg_hr_storyline'] = "Average heart rate is more than the average on XXX"            
+            else:
+                response_data['avg_hr_storyline'] = "Average heart rate is in regular range."
+
+        # story line:
+        if response_data['exercise_time'] == 0 or response_data['exercise_time_weekly_benchmark'] == 0:
+            response_data['exercise_time_storyline'] = "Not enough info."
+        else:
+            ratio = response_data['exercise_time']*1.0/ response_data['exercise_time_weekly_benchmark']
+
+            if ratio <0.9:
+                response_data['exercise_time_storyline'] = "Exercise time is less than the average on XXX"
+            elif ratio > 1.1:
+                response_data['exercise_time_storyline'] = "Exercise time is more than the average on XXX"            
+            else:
+                response_data['exercise_time_storyline'] = "Exercise time is in regular range."
+
+        # story line:
+        if response_data['total_steps'] == 0 or response_data['total_steps_weekly_benchmark'] == 0:
+            response_data['total_steps_storyline'] = "Not enough info."
+        else:
+            ratio = response_data['total_steps']*1.0/ response_data['total_steps_weekly_benchmark']
+
+            if ratio <0.9:
+                response_data['total_steps_storyline'] = "Total steps are less than the average on XXX"
+            elif ratio > 1.1:
+                response_data['total_steps_storyline'] = "Total steps are more than the average on XXX"            
+            else:
+                response_data['total_steps_storyline'] = "Total steps are in regular range."
 
         return JsonResponse(response_data)
