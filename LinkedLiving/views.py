@@ -408,6 +408,23 @@ class GetHealthInfoView(View):
         response_data['exercise_time_target'] = 20
 
 
+        #get week day
+
+        if query_start_date_time.weekday() == 0:
+            weekday = "Monday"
+        elif query_start_date_time.weekday() == 1:
+            weekday = "Tuesday"
+        elif query_start_date_time.weekday() == 2:
+            weekday = "Wednesday"
+        elif query_start_date_time.weekday() == 3:
+            weekday = "Thursday"
+        elif query_start_date_time.weekday() == 4:
+            weekday = "Friday"
+        elif query_start_date_time.weekday() == 5:
+            weekday = "Saturday"
+        elif query_start_date_time.weekday() == 6:
+            weekday = "Sunday"
+
         # story line:
         if response_data['avg_hr'] == 0 or response_data['avg_hr_weekly_benchmark'] == 0:
             response_data['avg_hr_storyline'] = "Not enough info."
@@ -415,9 +432,9 @@ class GetHealthInfoView(View):
             ratio = response_data['avg_hr']*1.0/ response_data['avg_hr_weekly_benchmark']
 
             if ratio <0.9:
-                response_data['avg_hr_storyline'] = "Average heart rate is less than the average on XXX"
+                response_data['avg_hr_storyline'] = "Average heart rate is less than the average on "+ weekday
             elif ratio > 1.1:
-                response_data['avg_hr_storyline'] = "Average heart rate is more than the average on XXX"            
+                response_data['avg_hr_storyline'] = "Average heart rate is more than the average on "+ weekday           
             else:
                 response_data['avg_hr_storyline'] = "Average heart rate is in regular range."
 
@@ -428,9 +445,9 @@ class GetHealthInfoView(View):
             ratio = response_data['exercise_time']*1.0/ response_data['exercise_time_weekly_benchmark']
 
             if ratio <0.9:
-                response_data['exercise_time_storyline'] = "Exercise time is less than the average on XXX"
+                response_data['exercise_time_storyline'] = "Exercise time is less than the average on "+ weekday
             elif ratio > 1.1:
-                response_data['exercise_time_storyline'] = "Exercise time is more than the average on XXX"            
+                response_data['exercise_time_storyline'] = "Exercise time is more than the average on "+ weekday         
             else:
                 response_data['exercise_time_storyline'] = "Exercise time is in regular range."
 
@@ -441,9 +458,9 @@ class GetHealthInfoView(View):
             ratio = response_data['total_steps']*1.0/ response_data['total_steps_weekly_benchmark']
 
             if ratio <0.9:
-                response_data['total_steps_storyline'] = "Total steps are less than the average on XXX"
+                response_data['total_steps_storyline'] = "Total steps are less than the average on "+ weekday
             elif ratio > 1.1:
-                response_data['total_steps_storyline'] = "Total steps are more than the average on XXX"            
+                response_data['total_steps_storyline'] = "Total steps are more than the average on "+ weekday            
             else:
                 response_data['total_steps_storyline'] = "Total steps are in regular range."
 
