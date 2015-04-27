@@ -12,6 +12,7 @@ import csv
 
 from datetime import datetime, timedelta
 
+timezone_offset = 25200
 
 def totimestamp(dt, epoch=datetime(1970,1,1)):
     td = dt - epoch
@@ -126,21 +127,21 @@ class GearData():
 class GetActivityView(View):
     def get(self, request, *args, **kwargs):
         query_user = request.GET.get('user_id','-1')
-        query_start_timestamp = int(request.GET.get('start_datetime','-1'))
-        query_end_timestamp = int(request.GET.get('end_datetime','-1'))
+        query_start_timestamp = int(request.GET.get('start_datetime','-1')) + timezone_offset
+        query_end_timestamp = int(request.GET.get('end_datetime','-1')) + timezone_offset
 
         response_data = []
 
         for entry in GearData.activity_detection_data:
 
-            start_timestamp = totimestamp(entry['start_date_time'])
-            end_timestamp = totimestamp(entry['end_date_time'])
+            start_timestamp = totimestamp(entry['start_date_time']) + timezone_offset
+            end_timestamp = totimestamp(entry['end_date_time']) + timezone_offset
             # Adding walking and running data
             if entry['activity_label'] != 'SLEEPING':
                 if start_timestamp >= query_start_timestamp and end_timestamp <= query_end_timestamp:
                     raw_entry = {}
-                    raw_entry['start_activity_time'] = start_timestamp
-                    raw_entry['end_activity_time'] = end_timestamp
+                    raw_entry['start_activity_time'] = start_timestamp 
+                    raw_entry['end_activity_time'] = end_timestamp 
                     if entry['activity_label'] == 'WALKING':
                         raw_entry['activity_type'] = 2
                     elif entry['activity_label'] == 'RUNNING':
@@ -174,7 +175,7 @@ class GetActivityView(View):
                 if int (entry['duration_mins']) < 120: # user is taking nap
                     if start_timestamp >= query_start_timestamp and end_timestamp <= query_end_timestamp:    
                         raw_entry = {}
-                        raw_entry['start_activity_time'] = start_timestamp
+                        raw_entry['start_activity_time'] = start_timestamp 
                         raw_entry['end_activity_time'] = end_timestamp
                         raw_entry['activity_type'] = 4
                         raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'nap', entry['duration_mins'])
@@ -230,14 +231,14 @@ class GetDailyView(View):
 
     def get(self, request, *args, **kwargs):
         query_user = request.GET.get('user_id','-1')
-        query_start_timestamp = int(request.GET.get('start_datetime','-1'))
-        query_end_timestamp = int(request.GET.get('end_datetime','-1'))
+        query_start_timestamp = int(request.GET.get('start_datetime','-1'))- timezone_offset
+        query_end_timestamp = int(request.GET.get('end_datetime','-1'))- timezone_offset
         response_data = []
         for entry in GearData.minutes_aggre_data:
             timestamp = totimestamp(entry['date_time'])
             if timestamp >= query_start_timestamp and timestamp <= query_end_timestamp:
                 raw_entry = {}
-                raw_entry['time_stamp'] = timestamp
+                raw_entry['time_stamp'] = timestamp + timezone_offset
                 raw_entry['avg_hr'] = entry['mins_avg_hr']
                 response_data.append(raw_entry) 
         return JsonResponse({'table':response_data})
@@ -245,8 +246,8 @@ class GetDailyView(View):
 class GetTrendView(View):
     def get(self, request, *args, **kwargs):
         query_user = request.GET.get('user_id','-1')
-        query_start_date_time = todatetime(int(request.GET.get('start_datetime','-1')))
-        query_end_date_time = todatetime(int(request.GET.get('end_datetime','-1')))
+        query_start_date_time = todatetime(int(request.GET.get('start_datetime','-1'))- timezone_offset) 
+        query_end_date_time = todatetime(int(request.GET.get('end_datetime','-1'))- timezone_offset)
 
         if query_start_date_time != None:
             target_start_date = query_start_date_time.date()
@@ -280,7 +281,7 @@ class GetTrendView(View):
         for entry in GearData.daily_aggre_data:
             if entry['date'].date() >= target_start_date and entry['date'].date() <=target_end_date:
                 raw_entry = {}
-                raw_entry['time_stamp'] = totimestamp(entry['date'])
+                raw_entry['time_stamp'] = totimestamp(entry['date']) +timezone_offset
                 raw_entry['max_hr'] = entry['daily_max_hr']
                 raw_entry['avg_hr_rest'] = entry['daily_avg_hr_rest']
                 raw_entry['avg_hr_sleep'] = entry['daily_avg_hr_sleep']
