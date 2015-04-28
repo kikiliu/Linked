@@ -1,10 +1,35 @@
 var app = angular.module("LinkedLiving", []);
+app.directive('chart', function() {
+	function link(scope, element, attrs) {
+		
+		function update() {
+			if (scope.data == null)
+				return;
+			var dataTable = createDataTable(scope.data, scope.definition.series);
+			drawVisualization(element[0], dataTable, scope.definition.lineColor, scope.definition.format);
+		}
+		scope.$watch('data', update);
+	}
+		
+	return {
+		restrict: 'A',//attribute, aka 'chart'
+		scope: {
+			data: "=data",
+			definition: "=definition"
+		},
+		link: link
+	}
+});
 
 app.controller("trend-data-controller", function($scope, $http) {
 	$scope.dateRange = "last30days";
 	var red = "#CF4858";
 	var green = "#16A79D";
 	var purple = "#80628B";
+	
+	var hrIcon="/static/images/heart.gif";
+	var actIcon="/static/images/run.gif";
+	var mobIcon="/static/images/mobility.gif";
 	
 	$scope.showDays = function(timedelta){
 		if (timedelta == null){
@@ -21,12 +46,15 @@ app.controller("trend-data-controller", function($scope, $http) {
 	$scope.showCustomizedDateRange = function() {
 		get_trend_data_by_range($scope.startDate, $scope.endDate);
 	}
-	
-	$scope.hrdefinitions = 
+	/*
+	 * Separate all data with charts from functions
+	 */
+	$scope.definitions = 
 		[
             {
             	id: 'AverageHeartRateDuringSleep',
             	label: 'Average HR during sleep',
+            	type: 'hr',
             	series: [ {
     				label : 'HR',
     				field : 'avg_hr_sleep'
@@ -36,13 +64,14 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: red,
     			format: "0",
-    			toggle: false,
-    			icon: hr,
-    			unit:"(beats per minute)"
+    			toggle: true,
+    			icon: hrIcon,
+    			unit:" (beats per minute)"
             },
             {
             	id: 'AverageHeartRateAtRest',
             	label: 'Average HR at rest',
+            	type: 'hr',
             	series: [ {
     				label : 'HR',
     				field : 'avg_hr_rest'
@@ -53,12 +82,13 @@ app.controller("trend-data-controller", function($scope, $http) {
     			lineColor: red,
     			format: "0",
     			toggle: false,
-    			icon:hr,
-    			unit:"(percentage of the day)"
+    			icon: hrIcon,
+    			unit:" (beats per minute)"
             },
             {
             	id: 'DailyMaximumHeartRate',
             	label: 'Daily maximum HR',
+            	type: 'hr',
             	series: [ {
     				label : 'HR',
     				field : 'max_hr'
@@ -68,11 +98,14 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: red,
     			format: "0",
-    			toggle: false            	
+    			toggle: false,
+    			icon: hrIcon,
+    			unit:" (beats per minute)"            	
             },
             {
             	id: 'PercentOfTimeAboveHigh',
             	label: 'Time with HR above 180',
+            	type: 'hr',
             	series: [ {
     				label : 'Percentage',
     				field : 'percent_of_time_above_high'
@@ -82,11 +115,14 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: red,
     			format: "0.0",
-    			toggle: false            	
+    			toggle: false,
+    			icon: hrIcon,
+    			unit:" (percentage of the day)"            	
             }, 
             {
             	id: 'PercentOfTimeAboveLow',
             	label: 'Time with HR above 100',
+            	type: 'hr',
             	series: [ {
     				label : 'Percentage',
     				field : 'percent_of_time_above_low'
@@ -96,14 +132,14 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: red,
     			format: "0.0",
-    			toggle: false            	
-            }
-		];
-	$scope.activitiesdefinitions = 
-		[
+    			toggle: false,
+    			icon: hrIcon,
+    			unit:" (percentage of the day)"            	
+            },
             {
             	id: 'ExerciseDuration',
             	label: 'Minutes of exercise',
+            	type: 'activity',
             	series: [ {
     				label : 'Minutes',
     				field : 'exercise_duration_minutes'
@@ -113,11 +149,14 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: green,
     			format: "0",
-    			toggle: false
+    			toggle: true,
+    			icon: actIcon,
+    			unit:" (minutes)"   
             },
             {
             	id: 'SleepDuration',
             	label: 'Hours of sleep',
+            	type: 'activity',
             	series: [ {
     				label : 'Hours',
     				field : 'sleep_duration_hours'
@@ -127,11 +166,14 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: green,
     			format: "0",
-    			toggle: false            	
+    			toggle: false,
+    			icon: actIcon,
+    			unit:" (hours)"            	
             },
             {
             	id: 'IntenseExerciseDuration',
             	label: 'Minutes of intense exercise',
+            	type: 'activity',
             	series: [ {
     				label : 'Minutes',
     				field : 'intense_exercise_duration_minutes'
@@ -141,14 +183,14 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: green,
     			format: "0",
-    			toggle: false            	
-            }
-        ]
-	$scope.mobilitydefinitions = 
-		[
+    			toggle: false,
+    			icon: actIcon,
+    			unit:" (minutes)"          	
+            },
             {
             	id: 'TotalSteps',
             	label: 'Number of steps',
+            	type: 'mobility',
             	series: [ {
     				label : 'Steps',
     				field : 'total_steps'
@@ -158,42 +200,23 @@ app.controller("trend-data-controller", function($scope, $http) {
     			} ],
     			lineColor: purple,
     			format: "0",
-    			toggle: false
+    			toggle: false,
+    			icon: mobIcon,
+    			unit:" (steps)"
             }
-         ]
+         ];
+		
+	$scope.isType = function(type) {
+		return function(definition) {
+			return definition.type == type;
+		};
+	};
 	
-	$scope.toggleChart = function(definition) {
-		if(definition.toggle) {
-			addChart(definition);
-		} else {
-			removeChart(definition);
-		}		
-	}
-
-	function addChart(definition) {
-		var element = document.getElementById(definition.id);
-		if (element == null) {
-			element = document.createElement("div");
-			element.id = definition.id;
-			element.definition = definition;
-			var container = document.querySelector("#main-charts ul");
-			container.insertBefore(element, container.children.length==0 ? null : container.children[0]);
-		}
-		updateChart(definition);
-	}
-	
-	function removeChart(definition) {
-		var element = document.getElementById(definition.id);
-		if (element != null) {
-			element.parentNode.removeChild(element);
-		}
-	}
-	
-	function updateChart(definition) {
-		var element = document.getElementById(definition.id);
-		var dataTable = createDataTable($scope.data, definition.series);
-		drawVisualization(element, dataTable, definition.lineColor, definition.format);
-	}
+	$scope.isToggled = function() {
+		return function(definition) {
+			return definition.toggle;
+		};
+	};
 	
 	function get_trend_data_by_range(start, end) {
 		$scope.startDate = start;
@@ -214,78 +237,74 @@ app.controller("trend-data-controller", function($scope, $http) {
 		var request = $http.get(url, options);
 		request.success(function(json_data) {
 			$scope.data = json_data["table"];
-			var container = document.querySelector("#main-charts ul");
-			for(var i=0;i<container.children.length;++i) {
-				var element = container.children[i];
-				updateChart(element.definition);
-			}
+			console.log('new data');
 		});
-	}
-
-	/*
-	 * series = [{label: 'HR', field: 'avg_hr_rest'}, {}, ...]
-	 */
-	function createDataTable(data, series) {
-		var dataTable = new google.visualization.DataTable();
-		dataTable.addColumn('datetime', 'Date');
-		for (var i = 0; i < series.length; ++i) {
-			dataTable.addColumn('number', series[i].label);
-		}
-		for (var i = 0; i < data.length; i++) {
-			var date = new Date(data[i].time_stamp * 1000);
-			date.setHours(0);
-			date.setMinutes(0);
-			date.setSeconds(0);
-
-			var row = [ date ];
-			for (var j = 0; j < series.length; ++j) {
-				row.push(data[i][series[j].field]);
-			}
-			dataTable.addRow(row);
-		}
-		return dataTable;
-	}
-
-	function drawVisualization(element, dataTable, lineColor, vFormat) {
-		var options = {
-			seriesType : "bars",
-			series : {
-				0 : {
-					color : lineColor,
-					visibleInLegend : false
-				},
-				1 : {
-					type : "line",
-					color:lineColor
-				}
-			},
-			width : 580,
-			chartArea : {
-				left : 40,
-				width : '75%',
-				height : '70%'
-			},
-			hAxis : {
-				format : 'MMM\ndd'
-			},
-			vAxis : {
-				format : vFormat
-			},
-			annotations : {
-				textStyle : {
-					fontName : 'Cabin',
-					fontSize : 14,
-					color : '#43s2F21'
-				}
-			},
-			dataOpacity : 0.3,
-			fontSize:12,
-			fontName:'Cabin',
-		};
-		element.innerHTML="";		
-		var chart = new google.visualization.ComboChart(element);
-		chart.draw(dataTable, options);
 	}
 
 	$scope.showDays(30);//to be changed to desired days
 });
+
+/*
+ * series = [{label: 'HR', field: 'avg_hr_rest'}, {}, ...]
+ */
+function createDataTable(data, series) {
+	var dataTable = new google.visualization.DataTable();
+	dataTable.addColumn('datetime', 'Date');
+	for (var i = 0; i < series.length; ++i) {
+		dataTable.addColumn('number', series[i].label);
+	}
+	for (var i = 0; i < data.length; i++) {
+		var date = new Date(data[i].time_stamp * 1000);
+		date.setHours(0);
+		date.setMinutes(0);
+		date.setSeconds(0);
+
+		var row = [ date ];
+		for (var j = 0; j < series.length; ++j) {
+			row.push(data[i][series[j].field]);
+		}
+		dataTable.addRow(row);
+	}
+	return dataTable;
+}
+
+function drawVisualization(element, dataTable, lineColor, vFormat) {
+	var options = {
+		seriesType : "bars",
+		series : {
+			0 : {
+				color : lineColor,
+				visibleInLegend : false
+			},
+			1 : {
+				type : "line",
+				color:lineColor
+			}
+		},
+		width : 580,
+		chartArea : {
+			left : 40,
+			width : '75%',
+			height : '70%'
+		},
+		hAxis : {
+			format : 'MMM\ndd'
+		},
+		vAxis : {
+			format : vFormat
+		},
+		annotations : {
+			textStyle : {
+				fontName : 'Cabin',
+				fontSize : 14,
+				color : '#43s2F21'
+			}
+		},
+		dataOpacity : 0.3,
+		fontSize:12,
+		fontName:'Cabin',
+	};
+	element.innerHTML="";		
+	var chart = new google.visualization.ComboChart(element);
+	chart.draw(dataTable, options);
+}

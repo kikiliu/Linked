@@ -36,11 +36,10 @@
 	    			<img src="/static/images/heart.gif">
 	    			<span class="selector-title">Heart Rate (HR)</span>
 	    			<ul>
-	    				<li ng-repeat="definition in hrdefinitions track by $index">
-	    					<input type="checkbox" class="button" ng-model="definition.toggle" ng-change="toggleChart(definition)" />
-	    					{{definition.label}}
+	    				<li ng-repeat="definition in definitions | filter:isType('hr')">
+	    					<label><input type="checkbox" ng-model="definition.toggle" />
+	    					<span>{{definition.label}}</span></label>
 	    				</li>
-	    				<li><span class="button">Time with HR above 100</span></li>
 	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
 	    			</ul>
 	    		</li>
@@ -48,8 +47,8 @@
 	    			<img src="/static/images/run.gif">
 	    			<span class="selector-title">Activities</span>
 	    			<ul>
-	    				<li ng-repeat="definition in activitiesdefinitions track by $index">
-	    					<input type="checkbox" class="button" ng-model="definition.toggle" ng-change="toggleChart(definition)" />
+	    				<li ng-repeat="definition in definitions | filter:isType('activity')">
+	    					<input type="checkbox" class="button" ng-model="definition.toggle" />
 	    					{{definition.label}}
 	    				</li>
 	    				<li><span class="button">Minutes of intense exercise</span></li>
@@ -60,8 +59,8 @@
 	    			<img src="/static/images/mobility.gif">
 	    			<span class="selector-title">Mobility</span>
 	    			<ul>
-	    				<li ng-repeat="definition in mobilitydefinitions track by $index">
-	    					<input type="checkbox" class="button" ng-model="definition.toggle" ng-change="toggleChart(definition)" />
+	    				<li ng-repeat="definition in definitions | filter:isType('mobility')">
+	    					<input type="checkbox" class="button" ng-model="definition.toggle" />
 	    					{{definition.label}}
 	    				</li>
 	    				<li><span class="button">Number of steps</span></li>
@@ -135,92 +134,17 @@
 			</div>
 	    	<div id="main-charts">
 		    	<ul>
-		    	<!--  
-		    		<li id="avg_hr_sleep_chart">
+		    		<li ng-repeat="definition in definitions | filter:isToggled()">
 		    			<div class="chart-title">
-		    				<img src="/static/images/heart.gif">
-		    				<span>Average Heart Rate during Sleep</span>
-		    				<span class="chart-unit">(beats per minute)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
+		    				<img ng-src="{{definition.icon}}">
+		    				<span>{{definition.label}}</span>
+		    				<span class="chart-unit">{{definition.unit}}</span>
+		    				<span class="chart-cancel" ng-click="definition.toggle=false"><img src="/static/images/cancel.gif"></span>
 		    			</div>
-		    			<div id="avg_hr_sleep"></div>
+		    			<div chart data="data" definition="definition"></div>
 		    		</li>
-		    		<li id="percent_of_time_above_high_chart">		    			
-		    			<div class="chart-title">
-		    				<img src="/static/images/heart.gif">
-		    				<span>Time with Heart Rate above 180 bpm</span>
-		    				<span class="chart-unit">(percentage of the day)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div> 
-		    			<div id="percent_of_time_above_high"></div>
-		    		</li>
-		    		<li id="percent_of_time_above_low_chart">
-		    			<div class="chart-title">
-		    				<img src="/static/images/heart.gif">
-		    				<span>Time with Heart Rate above 100 bpm</span>
-		    				<span class="chart-unit">(percentage of the day)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div> 
-		    			<div  id="percent_of_time_above_low"></div>
-		    		</li>
-		    		<li id="avg_hr_rest_chart">
-		    			<div class="chart-title">
-		    				<img src="/static/images/heart.gif">
-		    				<span>Average Heart Rate at Rest</span>
-		    				<span class="chart-unit">(beats per minute)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div>
-		    			<div id="avg_hr_rest"></div>		    		
-		    		</li>
-		    		<li id="max_hr_chart">
-		    			<div class="chart-title">
-		    				<img src="/static/images/heart.gif">
-		    				<span>Daily Maximum Heart Rate</span>
-		    				<span class="chart-unit">(beats per minute)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div>
-		    			<div id="max_hr"></div>		    		
-		    		</li>
-		    		<li id="exercise_duration_minutes_chart">
-		    			<div class="chart-title">
-		    				<img src="/static/images/run.gif">
-		    				<span>Exercise Time</span>
-		    				<span class="chart-unit">(minutes)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div>
-		    			<div id="exercise_duration_minutes"></div>	
-		    		</li>
-		    		<li id="sleep_duration_hours_chart">
-		    			<div class="chart-title">
-		    				<img src="/static/images/run.gif">
-		    				<span>Sleep Time</span>
-		    				<span class="chart-unit">(hours)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div>
-		    			<div id="sleep_duration_hours"></div>			    		
-		    		</li>
-		    		<li id="intense_exercise_duration_minutes_chart">
-		    			<div class="chart-title">
-		    				<img src="/static/images/run.gif">
-		    				<span>Intense Exercise Time</span>
-		    				<span class="chart-unit">(minutes)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div>
-		    			<div id="intense_exercise_duration_minutes"></div>			    		
-		    		</li>
-		    		<li id="total_steps_chart">
-		    			<div class="chart-title">
-		    				<img src="/static/images/mobility.gif">
-		    				<span>Total Steps</span>
-		    				<span class="chart-unit">(counts)</span>
-		    				<span class="chart-cancel"><img src="/static/images/cancel.gif"></span>
-		    			</div>
-		    			<div id="total_steps"></div>			    		
-		    		</li>
-		    		-->
 		    	</ul>
 	    	</div>
-
 	    </section>
 	</article>
   	<footer></footer>
