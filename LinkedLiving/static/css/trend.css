@@ -106,10 +106,9 @@ section{
 }
 
 .selector li{
-	display:block;
-	margin-top: 18px;
-	text-align: left;
+	text-align:left;
 }
+
 .selector-title{
 	vertical-align:middle;
 	font-size:23px;
@@ -122,22 +121,56 @@ section{
 }
 
 .button{
-	border: solid 3px #CF4858;
+	border: solid 3px rgba(67,48,33,0.3);
   	border-radius: 5px;
 	padding: 4px 10px;
   	font-size:18px;
+  	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+label{
+	font-weight:100;
+	text-align: left;
+}
+
+.selector label{
+	margin-top: 18px;
+}
+input[type=checkbox] {
+    position:absolute;
+    top:-20px;
+}
+#heart-rate .button{
+	border-color:#CF4858;
+}
+#heart-rate label:hover input[type=checkbox]+span{
+    background-color:rgba(207,72,88,0.3);
+}
+#heart-rate input[type=checkbox]:checked+span {
+    background-color:rgba(207,72,88,0.3);
 }
 
 #activity .button{
 	border-color: #16A79D;
 }
-
+#activity label:hover input[type=checkbox]+span{
+    background-color:rgba(22,167,157,0.3);
+}
+#activity input[type=checkbox]:checked+span {
+    background-color:rgba(22,167,157,0.3);
+}
 #mobility .button{
 	border-color:#80628B;
 }
-
-#time .button{
-	border-color:rgba(67,48,33,0.3);	
+#mobility label:hover input[type=checkbox]+span{
+    background-color:rgba(128,98,139,0.3);
+}
+#mobility input[type=checkbox]:checked+span {
+    background-color:rgba(128,98,139,0.3);
 }
 
 #time{
@@ -153,15 +186,29 @@ section{
 #time ul{
 	display:block;
 	text-align:left;
-	padding:24px 210px 0px 210px;
+	padding-top:20px;
+	padding-left:210px;
 }
 
 #time li{
 	display:inline;
 }
 
+label:hover input[type=radio]+span{
+    background-color:rgba(67,48,33,0.3);
+}
+input[type=radio]:checked+span {
+    background-color:rgba(67,48,33,0.3);
+}
+
+/*checkbox itself is moved out of top*/
+input[type=radio] {
+    position:absolute;
+    top:-20px;
+}
+
 #customize{
-	line-height:60px;
+	line-height:45px;
 }
 #date-selector{
 	/*left:0;
@@ -180,11 +227,30 @@ section{
 .arrow{
 	background-color:#D6D3C4;
 	text-align:center;
-	padding-top:10px;
 }
-#collapse, #expand{
-	font-size:28px;
-	opacity: 0.3;
+
+.arrow button {
+	border-width: 0;
+	background-color: inherit;
+	padding:0px;
+}
+
+#arrow-up {
+	width: 0; 
+	height: 0; 
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	
+	border-bottom: 15px solid rgba(67,48,33,0.3);
+	margin-bottom:10px;
+}
+#arrow-down {
+	width: 0; 
+	height: 0; 
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 15px solid rgba(67,48,33,0.3);
+	margin-top:20px;
 }
 
 #all-charts{
@@ -204,8 +270,8 @@ section{
 }
 
 .chart-title img{
-	height:23px;
-	width:23px;
+	height:24px;
+	width:24px;
 }
 
 .chart-unit{
@@ -215,6 +281,12 @@ section{
 .chart-cancel{
 	float: right;
   	margin-right: 80px;
+}
+
+.chart-title button{
+	border-width: 0;
+	background-color: inherit;
+	padding:0px;
 }
 #side-note{
 	border-left: 1px solid #CDCAB9;
@@ -286,39 +358,104 @@ section{
 	padding-left:80px;
 }
 
-label input[type=checkbox] span {
-    background-color:#EFEFEF;
-    border-radius:4px;
-    border:1px solid #D0D0D0;
-    overflow:auto;
-    float:left;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+/*
+* css for daily page
+*/
+
+#daily-selector{
+	height:30px;
+	background-color:#432F21;
+}
+#previous-selector{
+	width: 0; 
+	height: 0; 
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent; 
+	
+	border-right:15px solid white; 
+}
+#next-selector{
+	width: 0; 
+	height: 0; 
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	
+	border-left: 15px solid white;
 }
 
-label:hover input[type=checkbox] span {
-    background-color:#EFEFEF;
-    border-radius:4px;
-    border:1px solid red;
-    overflow:auto;
-    float:left;
-    color:red;
+.activities{
+  clear:both;
+  padding:30px 0px;
 }
 
-input[type=checkbox]+span{
-    padding:3px 6px;
+
+.time-range{
+  width:190px;
+  float:left;
+  text-align:right;
+  padding-right:35px;
+}
+.from-to{
+  font-size:25px;
+  padding-right:15px;
 }
 
-input[type=checkbox] {
-    position:absolute;
-    top:-20px;
+
+.background, .figure{
+  height:200px;
+  width:600px;
+  background-repeat:no-repeat;
+
 }
 
-input[type=checkbox]:checked+span {
-    background-color:#911;
-    color:#fff;
+.background, .timeline-top-bottom{
+  border-left:solid 2px #C9C9C9;
+  margin-left:190px;
+}
+
+.timeline-top-bottom{
+  height:30px;
+}
+
+.dash-gap{
+  border-left:dotted 2px #C9C9C9;
+  margin-left:190px;
+  height:40px;
+}
+
+.figure{
+  position:relative;
+}
+
+.story-line{
+  position:absolute;
+  right:15px;
+  top:15px;
+  text-align:right;
+}
+
+.activity-info{
+  position:absolute;
+  right:15px;
+  bottom:15px;
+  font-size:16px;
+  margin-right:41px;/*same as img size+padding,b/c img is float*/
+}
+
+.activity-info >div{
+  white-space: nowrap
+}
+
+.activity-info img{
+  float:left;
+  margin-right: 15px;
+}
+
+
+.footer{
+  clear:both;
+  height:36px;
+  background-color: #FFFFFF;
+  border-top:solid 3px #f2a5cd;
+  margin-top:30px;
 }

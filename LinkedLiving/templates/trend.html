@@ -30,15 +30,15 @@
     </header>
     <article class="trend-data" ng-controller="trend-data-controller">
 	    <section>
-	    <div id="columns">
+	    <div id="columns" ng-show="isOptionsExpanded">
 	    	<ul>
 	    		<li class="selector" id="heart-rate">
 	    			<img src="/static/images/heart.gif">
 	    			<span class="selector-title">Heart Rate (HR)</span>
 	    			<ul>
 	    				<li ng-repeat="definition in definitions | filter:isType('hr')">
-	    					<label><input type="checkbox" ng-model="definition.toggle" />
-	    					<span>{{definition.label}}</span></label>
+	    					<label><input type="checkbox" ng-model="definition.toggle" ng-change="toggle(definition)" />
+	    					<span class="button">{{definition.label}}</span></label>
 	    				</li>
 	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
 	    			</ul>
@@ -48,11 +48,11 @@
 	    			<span class="selector-title">Activities</span>
 	    			<ul>
 	    				<li ng-repeat="definition in definitions | filter:isType('activity')">
-	    					<input type="checkbox" class="button" ng-model="definition.toggle" />
-	    					{{definition.label}}
+	    					<label><input type="checkbox" class="button" ng-model="definition.toggle"  ng-change="toggle(definition)" />
+	    					<span class="button">{{definition.label}}</span></label>
 	    				</li>
-	    				<li><span class="button">Minutes of intense exercise</span></li>
-	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
+	    				<li><span class="batch-selector">
+	    				<a href="#" >Select all</a> / Deselect all</span></li>
 	    			</ul>
 	    		</li>
 	    		<li class="selector" id="mobility">
@@ -60,10 +60,9 @@
 	    			<span class="selector-title">Mobility</span>
 	    			<ul>
 	    				<li ng-repeat="definition in definitions | filter:isType('mobility')">
-	    					<input type="checkbox" class="button" ng-model="definition.toggle" />
-	    					{{definition.label}}
+	    					<label><input type="checkbox" class="button" ng-model="definition.toggle" ng-change="toggle(definition)" />
+	    					<span class="button">{{definition.label}}</span></label>
 	    				</li>
-	    				<li><span class="button">Number of steps</span></li>
 	    			</ul>
 	    		</li>
 	    	</ul>
@@ -74,22 +73,31 @@
 	    			<span>Date Range</span>
 	    		</div>
 	    		<ul>
-	    			<li><input type="radio" class="button" value="all" ng-model="dateRange" ng-click="showDays(null)" />All</li>
-	    			<li><input type="radio" class="button" value="last7days" ng-model="dateRange" ng-click="showDays(7)" />Last 7 days</li>
-	    			<li><input type="radio" class="button" value="last30days" ng-model="dateRange" ng-click="showDays(30)" />Last 30 days</li>
-	    			<li><input type="radio" class="button" value="last90days" ng-model="dateRange" ng-click="showDays(90)" />Last 90 days</li>
-	   				<li id="customize">
-	   					<input type="radio" class="button" value="customize" ng-model="dateRange" />Customize
+	    			<li>
+	    				<label><input type="radio" value="all" ng-model="dateRange" ng-click="showDays(null)" />
+	    				<span class="button">All</span>
+	    				</label>
+	    			</li>
+	    			<li><label><input type="radio" value="last7days" ng-model="dateRange" ng-click="showDays(7)" />
+	    				<span class="button">Last 7 days</span>
+	    				</label>
+	    			</li>
+	    			<li><label><input type="radio" value="last30days" ng-model="dateRange" ng-click="showDays(30)" />
+	    				<span class="button">Last 30 days</span></label></li>
+	    			<li><label><input type="radio" value="last90days" ng-model="dateRange" ng-click="showDays(90)" />
+	    				<span class="button">Last 90 days</span></label></li>
+	   				<li id="customize"><div>
+	   					<label><input type="radio" value="customize" ng-model="dateRange" />
+	   					<span class="button">Customize</span></label>
 	   					<span id="date-selector" ng-show="dateRange=='customize'">
 	   					From <input type="date" ng-model="startDate" ng-change="showCustomizedDateRange()"> 
-	   					To <input type="date" ng-model="endDate" ng-change="showCustomizedDateRange()"></span>
-	   			
+	   					To <input type="date" ng-model="endDate" ng-change="showCustomizedDateRange()"></span></div>
 	   				</li>
     			</ul>		
 	    	</div>
 	    	<div class="arrow {{status}}">
-	    		<span id="collapse">▲</span>
-	    		<span id="expand">▼</span>
+	    		<button id="arrow-up" ng-show="isOptionsExpanded" ng-click="isOptionsExpanded = false"></button>
+	    		<button id="arrow-down" ng-show="!isOptionsExpanded" ng-click="isOptionsExpanded = true"></button>
 	    	</div>
 	    </section>
 	    <section id="all-charts">
@@ -134,12 +142,12 @@
 			</div>
 	    	<div id="main-charts">
 		    	<ul>
-		    		<li ng-repeat="definition in definitions | filter:isToggled()">
+		    		<li ng-repeat="definition in definitions | filter:isToggled() | orderBy:'-toggleTimestamp'">
 		    			<div class="chart-title">
 		    				<img ng-src="{{definition.icon}}">
 		    				<span>{{definition.label}}</span>
 		    				<span class="chart-unit">{{definition.unit}}</span>
-		    				<span class="chart-cancel" ng-click="definition.toggle=false"><img src="/static/images/cancel.gif"></span>
+		    				<button class="chart-cancel" ng-click="definition.toggle=false"><img src="/static/images/cancel.gif"></button>
 		    			</div>
 		    			<div chart data="data" definition="definition"></div>
 		    		</li>

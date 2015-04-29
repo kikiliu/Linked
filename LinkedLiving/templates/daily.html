@@ -28,64 +28,13 @@
           <li><a href="#">My account</a></li>
       </ul>
     </header>
-    <article class="daily-data" ng-controller="daily-data-controller">
-	    <section>
-	    <div id="columns">
-	    	<ul>
-	    		<li class="selector" id="heart-rate">
-	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/heart.gif">
-	    			<span class="selector-title">Heart Rate (HR)</span>
-	    			<ul>
-	    				<li><span class="button">Average HR during sleep</span></li>
-	    				<li><span class="button">Average HR at rest</span></li>
-	    				<li><span class="button">Daily maximum HR</span></li>
-	    				<li><span class="button">Time with HR above 180</span></li>
-	    				<li><span class="button">Time with HR above 100</span></li>
-	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
-	    			</ul>
-	    		</li>
-	    		<li class="selector" id="activity">
-	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/run.gif">
-	    			<span class="selector-title">Activities</span>
-	    			<ul>
-	    				<li><span class="button">Minutes of exercise</span></li>
-	    				<li><span class="button">Hours of sleep</span></li>
-	    				<li><span class="button">Minutes of intense exercise</span></li>
-	    				<li><span class="batch-selector">Select all / Deselect all</span></li>
-	    			</ul>
-	    		</li>
-	    		<li class="selector" id="mobility">
-	    			<img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/mobility.gif">
-	    			<span class="selector-title">Mobility</span>
-	    			<ul>
-	    				<li><span class="button">Number of steps</span></li>
-	    			</ul>
-	    		</li>
-	    	</ul>
-	    	</div>
-	    	<div id="time">
-	    		<div class="selector-title">
-	    		   <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/images/icons/period.gif">
-	    			<span>Date Range</span>
-	    		</div>
-	    		<ul>
-	    			<li><span class="button">All</span></li>
-	    			<li><span class="button">Last 1 week</span></li>
-	    			<li><span class="button">Last 1 month</span></li>
-	    			<li><span class="button">Last 3 months</span></li>
-	   				<li id="customize">
-	   					<span class="button">Customize</span>
-	   					<span id="date-selector">From <input type="date" name="start-date"> To <input type="date" name="end-date"></span>
-	   			
-	   				</li>
-    			</ul>		
-	    	</div>
-	    	<div class="arrow {{status}}">
-	    		<span id="collapse">▲</span>
-	    		<span id="expand">▼</span>
-	    	</div>
-	    </section>
-	    <section class="activities" ng-controller="activities-controller">
+    <article class="daily-info" ng-controller="daily-info-controller">>
+	    <div id="daily-selector">
+	    	<span id="previous-selector" ng-click="goto_previous_day()"></span>
+	        <span class="datetime">{{current_date | date:'EEE, MMM d, yyyy'}}</span>
+	        <span id="next-selector" ng-click="goto_next_day()"></span>      
+	    </div>
+	    <section id="all-charts">
 	    	<div id="side-note">
 				<div id="howto">
 					<div class="side-title">
@@ -125,43 +74,43 @@
 					</div>
 				</div>
 			</div>
-
-	      <div class="timeline-top-bottom"></div>
-	      <ul class="repeater">
-	        <li ng-repeat="activity in activities">
-	          <div class="time-range">
-	            <div>{{activity.start_activity_time | date:'HH:mm'}}</div>
-	            <div class="from-to" ng-if="activity.period">|</div>
-	            <div>{{activity.end_activity_time | date:'HH:mm'}}</div>
-	          </div>
-	          <div class="activity">
-	            <div class="background" style="background-image:url('{{activity.background_image}}')">
-	              <div class="figure" style="background-image:url('{{activity.figure_image}}')">
-	                <div class="story-line">
-	                  <div>{{activity.caption}}</div>
-	                  
-	                </div>
-	                <div class="activity-info"  ng-if="activity.info_display">
-	                  <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/heart_mini.png"/>
-	                    <div>
-	                      Highest: {{activity.max_heart_rate}}</div>
-	                    <div>Average: {{activity.avg_heart_rate}}</div>
-	                                    <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/mobility_mini.png"/>
-	                    <div>{{activity.steps}} steps</div>
-	                    <div>Low intensity</div>
-	                  
-	                </div>
-	              </div>
-	           </div>
-	           <div class="dash-gap">
-	           </div>
-	          </div>
-	          
-	        </li>
-	
-	        <div class="timeline-top-bottom"></div>
-	      </ul>
-
+	    	<div id="main-charts">
+		      <div class="timeline-top-bottom"></div>
+		      <ul class="repeater">
+		        <li ng-repeat="activity in activities">
+		          <div class="time-range">
+		            <div>{{activity.start_activity_time | date:'HH:mm'}}</div>
+		            <div class="from-to" ng-if="activity.period">|</div>
+		            <div>{{activity.end_activity_time | date:'HH:mm'}}</div>
+		          </div>
+		          <div class="activity">
+		            <div class="background" style="background-image:url('{{activity.background_image}}')">
+		              <div class="figure" style="background-image:url('{{activity.figure_image}}')">
+		                <div class="story-line">
+		                  <div>{{activity.caption}}</div>
+		                  
+		                </div>
+		                <div class="activity-info"  ng-if="activity.info_display">
+		                  <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/heart_mini.png"/>
+		                    <div>
+		                      Highest: {{activity.max_heart_rate}}</div>
+		                    <div>Average: {{activity.avg_heart_rate}}</div>
+		                                    <img src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/mobility_mini.png"/>
+		                    <div>{{activity.steps}} steps</div>
+		                    <div>Low intensity</div>
+		                  
+		                </div>
+		              </div>
+		           </div>
+		           <div class="dash-gap">
+		           </div>
+		          </div>
+		          
+		        </li>
+		
+		        <div class="timeline-top-bottom"></div>
+		      </ul>
+	    	</div>
 	    </section>
 	</article>
   	<footer></footer>
