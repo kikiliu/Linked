@@ -1,12 +1,12 @@
 
-#Call get_trend: 2015/04/01 00:00:00 (UTC) to 2015/04/15 23:59:59 (UTC)
+#Call get_trend: 2015/04/01 00:00:00 (Local Time) to 2015/04/15 23:59:59 (Local Time)
 http://127.0.0.1:8000/api/get_trend/?user_id=123&start_datetime=1427871600&end_datetime=1429167599
 
-#Call get_daily: 2015/04/01 00:00:00 (UTC) to 2015/04/01 23:59:59 (UTC)
+#Call get_daily: 2015/04/01 00:00:00 (Local Time) to 2015/04/01 23:59:59 (Local Time)
 http://127.0.0.1:8000/api/get_daily/?user_id=123&start_datetime=1427871600&end_datetime=1427957999
 
 
-# Call get_activity: 2015/04/01 00:00:00 to 2015/04/01 23:59:59
+# Call get_activity: 2015/04/01 00:00:00 (Local Time) to 2015/04/01 23:59:59 (Local Time)
 http://127.0.0.1:8000/api/get_activity/?user_id=123&start_datetime=1427871600&end_datetime=1427957999
 
 # Call get_health_info 2015/04/01 00:00:00 to 2015/04/01 23:59:59
