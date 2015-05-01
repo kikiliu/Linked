@@ -134,14 +134,14 @@ class GetActivityView(View):
 
         for entry in GearData.activity_detection_data:
 
-            start_timestamp = totimestamp(entry['start_date_time']) + timezone_offset
-            end_timestamp = totimestamp(entry['end_date_time']) + timezone_offset
+            start_timestamp = totimestamp(entry['start_date_time']) #+ timezone_offset
+            end_timestamp = totimestamp(entry['end_date_time']) #+ timezone_offset
             # Adding walking and running data
             if entry['activity_label'] != 'SLEEPING':
                 if start_timestamp >= query_start_timestamp and end_timestamp <= query_end_timestamp:
                     raw_entry = {}
-                    raw_entry['start_activity_time'] = start_timestamp 
-                    raw_entry['end_activity_time'] = end_timestamp 
+                    raw_entry['start_activity_time'] = start_timestamp + timezone_offset
+                    raw_entry['end_activity_time'] = end_timestamp + timezone_offset
                     if entry['activity_label'] == 'WALKING':
                         raw_entry['activity_type'] = 2
                     elif entry['activity_label'] == 'RUNNING':
@@ -175,8 +175,8 @@ class GetActivityView(View):
                 if int (entry['duration_mins']) < 120: # user is taking nap
                     if start_timestamp >= query_start_timestamp and end_timestamp <= query_end_timestamp:    
                         raw_entry = {}
-                        raw_entry['start_activity_time'] = start_timestamp 
-                        raw_entry['end_activity_time'] = end_timestamp
+                        raw_entry['start_activity_time'] = start_timestamp + timezone_offset
+                        raw_entry['end_activity_time'] = end_timestamp + timezone_offset
                         raw_entry['activity_type'] = 4
                         raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'nap', entry['duration_mins'])
                         raw_entry['max_hr'] = entry['max_hr']
@@ -193,13 +193,16 @@ class GetActivityView(View):
                         elif getTime(entry['start_date_time']) == 'night':
                             raw_entry['time_flag'] = 4 
                         response_data.append(raw_entry) 
-                else: 
+                else:   # user is sleeping
                     if (getTime(entry['start_date_time']) == 'night' or getTime(entry['start_date_time']) == 'morning') \
                         and start_timestamp >= query_start_timestamp \
                         and start_timestamp <= query_end_timestamp: # user is going to sleep
                         raw_entry = {}
-                        raw_entry['start_activity_time'] = start_timestamp
-                        raw_entry['end_activity_time'] = None
+                        raw_entry['start_activity_time'] = start_timestamp + timezone_offset
+                        if end_timestamp <= query_end_timestamp: # user is waking up before midnight
+                            raw_entry['end_activity_time'] = end_timestamp + timezone_offset
+                        else:                                    # user is waking up in another day
+                            raw_entry['end_activity_time'] = query_end_timestamp + timezone_offset
                         raw_entry['activity_type'] = 1
                         raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'sleep', entry['duration_mins'])
                         raw_entry['max_hr'] = entry['max_hr']
@@ -213,8 +216,11 @@ class GetActivityView(View):
                          and end_timestamp >= query_start_timestamp \
                          and end_timestamp <= query_end_timestamp: # user is waking up
                         raw_entry = {}
-                        raw_entry['start_activity_time'] = end_timestamp
-                        raw_entry['end_activity_time'] = None
+                        if start_timestamp >= query_start_timestamp: # user is going to sleep after midnight
+                            raw_entry['start_activity_time'] = start_timestamp + timezone_offset
+                        else: 
+                            raw_entry['start_activity_time'] = query_start_timestamp + timezone_offset
+                        raw_entry['end_activity_time'] = end_timestamp + timezone_offset
                         raw_entry['activity_type'] = 0
                         raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'wakeup', entry['duration_mins'])
                         raw_entry['max_hr'] = entry['max_hr']
