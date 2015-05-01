@@ -1,0 +1,116 @@
+/*
+* css for daily page
+*/
+
+.datetime{
+	font-size:23px;
+	color:white;
+}
+
+#daily-selector{
+	height:30px;
+	background-color:#432F21;
+}
+#previous-selector{
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	
+	border-right:10px solid white; 
+}
+#next-selector{
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	
+	border-left: 10px solid white;
+}
+
+#date-picker{
+	font-size:14px;
+	color:white;
+}
+
+.activities{
+  clear:both;
+  padding:30px 0px;
+}
+
+
+.time-range{
+  width:190px;
+  float:left;
+  text-align:right;
+  padding-right:35px;
+}
+.from-to{
+  font-size:25px;
+  padding-right:15px;
+}
+
+
+.background, .figure{
+  height:200px;
+  width:600px;
+  background-repeat:no-repeat;
+
+}
+
+.background, .timeline-top-bottom{
+  border-left:solid 2px #C9C9C9;
+  margin-left:190px;
+}
+
+.timeline-top-bottom{
+  height:30px;
+}
+
+.dash-gap{
+  border-left:dotted 2px #C9C9C9;
+  margin-left:190px;
+  height:40px;
+}
+
+.figure{
+  position:relative;
+}
+
+.story-line{
+  position:absolute;
+  right:15px;
+  top:15px;
+  text-align:right;
+}
+
+.activity-info{
+  position:absolute;
+  right:15px;
+  bottom:15px;
+  font-size:16px;
+  margin-right:41px;/*same as img size+padding,b/c img is float*/
+}
+
+.activity-info >div{
+  white-space: nowrap
+}
+
+.activity-info img{
+  float:left;
+  margin-right: 15px;
+}
+
+
+.footer{
+  clear:both;
+  height:36px;
+  background-color: #FFFFFF;
+  border-top:solid 3px #f2a5cd;
+  margin-top:30px;
+}
+
+#main_chart {
+	height: 300px;
+}
+}

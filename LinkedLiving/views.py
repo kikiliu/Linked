@@ -100,9 +100,9 @@ class GearData():
             raw_line = {}
             raw_line['date_time'] = datetime.strptime(line[0], "%Y-%m-%d %H:%M")
             raw_line['mins_label'] = line[1]
-            raw_line['mins_max_hr'] = line[2]
-            raw_line['mins_avg_hr'] = line[3]
-            raw_line['mins_total_steps'] = line[4]
+            raw_line['mins_max_hr'] = int(line[2])
+            raw_line['mins_avg_hr'] = int(line[3])
+            raw_line['mins_total_steps'] = int(line[4])
             raw_line['mins_mannual_labels'] = line[5]
             minutes_aggre_data.append(raw_line)
     #load activity detection data
