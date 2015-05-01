@@ -240,7 +240,19 @@ class GetDailyView(View):
                 raw_entry = {}
                 raw_entry['time_stamp'] = timestamp + timezone_offset
                 raw_entry['avg_hr'] = entry['mins_avg_hr']
-                response_data.append(raw_entry) 
+                response_data.append(raw_entry)
+        time = query_start_timestamp
+        while time < query_end_timestamp:
+            has_data = False
+            for entry in response_data:
+                if entry['time_stamp'] == time + timezone_offset:
+                    has_data = True
+            if has_data == False:
+                raw_entry = {}
+                raw_entry['time_stamp'] = time + timezone_offset
+                raw_entry['avg_hr'] = 0
+                response_data.append(raw_entry)
+            time = time + 60
         return JsonResponse({'table':response_data})
 
 class GetTrendView(View):
