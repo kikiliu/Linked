@@ -165,7 +165,11 @@ input[type=radio] {
 }
 
 
-
+#all-charts{
+	padding:35px 0px 60px 40px;
+	margin-top:20px;
+	overflow:auto;/*parent stretch to contain float child*/
+}
 
 #main-charts{
 	margin-right: 313px;

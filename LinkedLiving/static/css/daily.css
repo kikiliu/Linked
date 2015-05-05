@@ -1,36 +1,43 @@
-/*
-* css for daily page
-*/
+/*css for daily page*/
 
 .datetime{
 	font-size:23px;
-	color:white;
+	width: 250px;
+	padding: 0 20px;
+	display: inline-block;
 }
 
 #daily-selector{
-	height:30px;
 	background-color:#432F21;
-}
-#previous-selector{
-	width: 0; 
-	height: 0; 
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent; 
-	
-	border-right:10px solid white; 
-}
-#next-selector{
-	width: 0; 
-	height: 0; 
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	
-	border-left: 10px solid white;
+	text-align:center;
+	color: white;
+	padding: 5px 0 25px 0;
+	position:relative;
 }
 
-#date-picker{
+#daily-selector button{
+  background-color: inherit;
+  padding: 0px;
+  border-width: 0px;
+}
+
+
+#legend {
+	text-align: right;
 	font-size:14px;
-	color:white;
+}
+
+#legend span {
+	margin-right: 40px;
+}
+
+#daily-charts{
+	padding:35px 0px 60px 40px;
+	overflow:auto;/*parent stretch to contain float child*/
+}
+
+#main_chart {
+	height: 400px;
 }
 
 .activities{
@@ -40,10 +47,9 @@
 
 
 .time-range{
-  width:190px;
+  width:50px;
   float:left;
   text-align:right;
-  padding-right:35px;
 }
 .from-to{
   font-size:25px;
@@ -52,25 +58,30 @@
 
 
 .background, .figure{
-  height:200px;
-  width:600px;
+  height:180px;
+  width:500px;
   background-repeat:no-repeat;
+  background-color: #eeeeee;
 
 }
 
-.background, .timeline-top-bottom{
-  border-left:solid 2px #C9C9C9;
-  margin-left:190px;
+.background, .timeline-top, .timeline-bottom{
+  border-left:solid 3px #C9C9C9;
+  margin-left:60px;
 }
 
-.timeline-top-bottom{
+.timeline-top {
+	height: 20px;	
+}
+
+.timeline-bottom{
   height:30px;
 }
 
 .dash-gap{
-  border-left:dotted 2px #C9C9C9;
-  margin-left:190px;
-  height:40px;
+  border-left:dotted 3px #C9C9C9;
+  margin:5px 0 5px 60px;
+  height:50px;
 }
 
 .figure{
@@ -110,7 +121,3 @@
   margin-top:30px;
 }
 
-#main_chart {
-	height: 300px;
-}
-}

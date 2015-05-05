@@ -86,13 +86,21 @@ section{
 	background-color:#FFFFFF;
 }
 
+
+.dropdown{
+  font-size:14px;
+  position:absolute;
+  right:0;
+  top:5px;
+}
+
+.dropdown-menu {
+	color:#666666;
+}
+
 /* comments
 */
-#all-charts{
-	padding:35px 0px 60px 40px;
-	margin-top:20px;
-	overflow:auto;/*parent stretch to contain float child*/
-}
+
 
 #side-note{
 	border-left: 1px solid #CDCAB9;

@@ -1,4 +1,4 @@
-var app = angular.module("LinkedLiving", []);
+var app = angular.module("LinkedLiving", ['ui.bootstrap.datetimepicker']);
 app.directive('chart', function() {
   function link(scope, element, attrs) {
 
@@ -74,7 +74,7 @@ function drawVisualization(element, dataTable, definition) {
         color: '#43s2F21'
       }
     },
-    dataOpacity: 0.3,
+    dataOpacity: definition.opacity,
     fontSize: 12,
     fontName: 'Cabin',
     animation: {

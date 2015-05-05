@@ -43,7 +43,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0",
     toggle: true,
     icon: hrIcon,
-    unit: " (beats per minute)"
+    unit: " (beats per minute)",
+    opacity: 0.3
   }, {
     id: 'AverageHeartRateAtRest',
     label: 'Average HR at rest',
@@ -60,7 +61,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0",
     toggle: false,
     icon: hrIcon,
-    unit: " (beats per minute)"
+    unit: " (beats per minute)",
+    opacity: 0.3
   }, {
     id: 'DailyMaximumHeartRate',
     label: 'Daily maximum HR',
@@ -77,7 +79,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0",
     toggle: false,
     icon: hrIcon,
-    unit: " (beats per minute)"
+    unit: " (beats per minute)",
+    opacity: 0.3
   }, {
     id: 'PercentOfTimeAboveHigh',
     label: 'Time with HR above 180',
@@ -94,7 +97,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0.0",
     toggle: false,
     icon: hrIcon,
-    unit: " (percentage of the day)"
+    unit: " (percentage of the day)",
+    opacity: 0.3
   }, {
     id: 'PercentOfTimeAboveLow',
     label: 'Time with HR above 100',
@@ -111,7 +115,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0.0",
     toggle: false,
     icon: hrIcon,
-    unit: " (percentage of the day)"
+    unit: " (percentage of the day)",
+    opacity: 0.3
   }, {
     id: 'ExerciseDuration',
     label: 'Minutes of exercise',
@@ -128,7 +133,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0",
     toggle: true,
     icon: actIcon,
-    unit: " (minutes)"
+    unit: " (minutes)",
+    opacity: 0.3
   }, {
     id: 'SleepDuration',
     label: 'Hours of sleep',
@@ -145,7 +151,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0",
     toggle: false,
     icon: actIcon,
-    unit: " (hours)"
+    unit: " (hours)",
+    opacity: 0.3
   }, {
     id: 'IntenseExerciseDuration',
     label: 'Minutes of intense exercise',
@@ -162,7 +169,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0",
     toggle: false,
     icon: actIcon,
-    unit: " (minutes)"
+    unit: " (minutes)",
+    opacity: 0.3
   }, {
     id: 'TotalSteps',
     label: 'Number of steps',
@@ -179,7 +187,8 @@ app.controller("trend-data-controller", function($scope, $http) {
     vFormat: "0",
     toggle: false,
     icon: mobIcon,
-    unit: " (steps)"
+    unit: " (steps)",
+    opacity: 0.3
   }];
   // index for sorting
   angular.forEach($scope.definitions, function(definition) {
