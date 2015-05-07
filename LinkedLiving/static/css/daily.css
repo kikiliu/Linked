@@ -38,6 +38,7 @@
 
 #main_chart {
 	height: 400px;
+	margin-right:40px;
 }
 
 .activities{
@@ -64,6 +65,9 @@
 
 }
 
+.figure{
+	position: relative;
+}
 .background, .timeline-top, .timeline-bottom{
   border-left:solid 3px #C9C9C9;
   margin-left:60px;

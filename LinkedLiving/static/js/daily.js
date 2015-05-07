@@ -1,4 +1,8 @@
-app.directive('heartRateChart', function() {
+function getDate(datetime) {
+  return new Date(datetime.getFullYear(), datetime.getMonth(), datetime.getDate());
+}
+
+app.directive('dailyChart', function() {
   var heartRateColor = "#EF9aaa";
   var normalHeartRateColor = "#CF4858";
   var sleepColor = "#3E5D7E";
@@ -21,21 +25,25 @@ app.directive('heartRateChart', function() {
       dataTable.addColumn('datetime', 'Date');
       dataTable.addColumn('number', "Heart Rate");
       dataTable.addColumn('number', "Average Heart Rate");
-      dataTable.addColumn('number', 'a');
-      dataTable.addColumn('number', 'a');
-      dataTable.addColumn('number', 'a');
+      dataTable.addColumn('number', 'sleep');
+      dataTable.addColumn('number', 'sleep');
+      dataTable.addColumn('number', 'walk');
+      dataTable.addColumn('number', 'run');
+      dataTable.addColumn('number', 'nap');
       
       for(var i=0;i<heartRateData.length;i++) {
         var time = new Date(heartRateData[i].time_stamp*1000);
-        var row = [time, heartRateData[i].avg_hr, 120, null, null, null];
+        var row = [time, heartRateData[i].avg_hr, 120, null, null, null,null,null];
         dataTable.addRow(row);
       }
       for (var i = 0; i < activityData.length; ++i) {
         var activity = activityData[i];
-        var row1 = [new Date(activity.start_activity_time*1000-1), null, null, null, null, null];
-        var row2 = [new Date(activity.start_activity_time*1000), null, null, null, null, null];
-        var row3 = [new Date(activity.end_activity_time*1000), null, null, null, null, null];
-        var row4 = [new Date(activity.end_activity_time*1000+1), null, null, null, null, null];
+        var start = activity.start_activity_time == null ? getDate(date).getTime() : activity.start_activity_time*1000;
+        var end = activity.end_activity_time == null ? getDate(date).getTime() + 24*60*60*1000  : activity.end_activity_time*1000;
+        var row1 = [new Date(start-1), null, null, null, null, null,null,null];
+        var row2 = [new Date(start), null, null, null, null, null,null,null];
+        var row3 = [new Date(end), null, null, null, null, null,null,null];
+        var row4 = [new Date(end+1), null, null, null, null, null,null,null];
         row1[3 + activityData[i].activity_type] = minValue;
         row2[3 + activityData[i].activity_type] = maxValue;
         row3[3 + activityData[i].activity_type] = maxValue;
@@ -53,10 +61,10 @@ app.directive('heartRateChart', function() {
     scope.$watch('activityData', update);
   }
   
-  function drawVisualization(element, dataTable, definition) {
+  function drawVisualization(element, dataTable) {
     var options = {
       enableInteractivity: false,      
-      legend: {position: 'none'},
+      legend: {position: 'right'},
       series: {
         0: {
           type: "bars",
@@ -68,55 +76,68 @@ app.directive('heartRateChart', function() {
           type: "line",
           //lineDashStyle: [8,4],
           color: normalHeartRateColor,
+          labelInLegend: "Average maximum heart rate for people in 70s"
         },
         2: {
           type: "area",
           color: sleepColor,
           areaOpacity: 0.3,
           connectSteps: false,
-          lineWidth: 0
+          lineWidth: 0,
+          visibleInLegend: false
         },
         3: {
           type: "area",
           color: sleepColor,
           areaOpacity: 0.3,
           connectSteps: false,
-          lineWidth: 0
+          lineWidth: 0,
+          visibleInLegend: false
         },       
         4: {
           type: "area",
           color: walkColor,
           areaOpacity: 0.3,
           connectSteps: false,
-          lineWidth: 0
+          lineWidth: 0,
+          visibleInLegend: false
         },
         5: {
           type: "area",
           color: runColor,
           areaOpacity: 0.3,
           connectSteps: false,
-          lineWidth: 0
+          lineWidth: 0,
+          visibleInLegend: false
         },
         6: {
           type: "area",
           color: sleepColor,
           areaOpacity: 0.3,
           connectSteps: false,
-          lineWidth: 0
+          lineWidth: 0,
+          visibleInLegend: false
         }
       },
       width: element.offsetWidth,
       height: element.offsetHeight,
-      chartArea: {
-        width: '670px',
+/*      chartArea: {
+        width: '940px',
         height: '300px'
-      },
+      },*/
       hAxis: {
         format: "h aa",
         gridlines: { color: 'transparent' } 
       },
       vAxis: {
-        format: definition.vFormat
+        format: '0',
+        title:"Heart Rate (beats/min)",
+        titleTextStyle:{
+          fontName: 'Cabin',
+          fontSize: 14,
+          color: '#43s2F21',
+          italic:false
+        }
       },
       annotations: {
         textStyle: {
@@ -125,12 +146,12 @@ app.directive('heartRateChart', function() {
           color: '#43s2F21'
         }
       },
-      dataOpacity: definition.opacity,
+      dataOpacity: 1,
       fontSize: 12,
       fontName: 'Cabin',
       animation: {
         startup: true,
-        duration: 500
+        duration: 200
       }
     };
     element.innerHTML = "";
@@ -144,7 +165,7 @@ app.directive('heartRateChart', function() {
       date: "=",
       heartRateData: "=",
       activityData: "=",
-      definition: "="
+      //definition: "="
     },
     link: link
   }
@@ -152,17 +173,7 @@ app.directive('heartRateChart', function() {
 
 app.controller("daily-info-controller", function($scope, $http) {
   var red = "#CF4858";
-  $scope.date = new Date(2015,3,1,0,0,0);
-  $scope.definition = {
-          id: 'HeartRate',
-          series: [{
-            label: 'HR',
-            field: 'avg_hr'
-          }],
-          lineColor: red,
-          hFormat: 'hh:mm',
-          vFormat: "0",
-        };
+  $scope.date = new Date(2015,3,1,0,0,0);//april 1, 2015
   
   $scope.gotoPreviousDay = function() {
     $scope.date = new Date($scope.date.getTime() - 24*60*60*1000);
@@ -211,7 +222,24 @@ app.controller("daily-info-controller", function($scope, $http) {
     };
 
     var request = $http.get(url, options);
+    
+    var background = [[,,,,],
+                      [,"sunny_morning","sunny_afternoon","sunny_evening","sunny_night"],
+                      [,"rain_morning","rain_afternoon","rain_evening","rain_night"],
+                      [,"cloudy_morning","cloudy_afternoon","cloudy_evening","cloudy_night"],
+                      [,"snow_morning","snow_afternoon","snow_evening","snow_night"]
+                      ];
+    var figure = ["wake_up", "wake_up", "walk","run","nap"];
+    
     request.success(function(json_data) {
+
+      for (var activity in json_data["table"]) {
+        console.log(activity.activity_type);
+        if (activity.background_flag >0 && activity.time_flag > 0)
+             {activity.background = "/static/images/"+ background[activity.background_flag][activity.time_flag] +".png"}
+        activity.figure = "/static/images/"+ figure[activity.activity_type] +".png";
+        console.log(activity.figure);        
+        }
       $scope.activityData = json_data["table"];
     });
   }

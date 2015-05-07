@@ -11,6 +11,7 @@ import random
 import csv
 
 from datetime import datetime, timedelta
+from matplotlib.cbook import Null
 
 timezone_offset = 25200
 
@@ -206,7 +207,7 @@ class GetActivityView(View):
                             raw_entry['end_activity_time'] = end_timestamp + timezone_offset
                         else:
                             # user is waking up in another day
-                            raw_entry['end_activity_time'] = "null"
+                            raw_entry['end_activity_time'] = None
                             #raw_entry['end_activity_time'] = query_end_timestamp + timezone_offset
                         raw_entry['activity_type'] = 0
                         raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'SLEEPING', entry['duration_mins'])
@@ -227,7 +228,7 @@ class GetActivityView(View):
                             raw_entry['start_activity_time'] = start_timestamp + timezone_offset
                         else: 
                             # user is going to sleep before midnight (ie. last night)
-                            raw_entry['start_activity_time'] = 'null'
+                            raw_entry['start_activity_time'] = None
                         raw_entry['end_activity_time'] = end_timestamp + timezone_offset
                         raw_entry['activity_type'] = 0
                         raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'SLEEPING', entry['duration_mins'])
