@@ -74,6 +74,8 @@ def getStory(start_datetime, end_datetime, label,duration):
         return user + " woke up. It was " + str(round(float(duration)/60, 1)) + " hours sleep."
     if label == 'sleep':
         return user + " went to bed."
+    if label == 'SLEEPING':
+        return user + " had " + str(round(float(duration)/60, 1)) + " hours sleep."
 
 class GearData():
     #load daily aggregation data
@@ -199,12 +201,16 @@ class GetActivityView(View):
                         and start_timestamp <= query_end_timestamp: # user is going to sleep
                         raw_entry = {}
                         raw_entry['start_activity_time'] = start_timestamp + timezone_offset
-                        if end_timestamp <= query_end_timestamp: # user is waking up before midnight
+                        if end_timestamp <= query_end_timestamp: 
+                            # user is waking up before midnight
                             raw_entry['end_activity_time'] = end_timestamp + timezone_offset
-                        else:                                    # user is waking up in another day
-                            raw_entry['end_activity_time'] = query_end_timestamp + timezone_offset
-                        raw_entry['activity_type'] = 1
-                        raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'sleep', entry['duration_mins'])
+                        else:
+                            # user is waking up in another day
+                            raw_entry['end_activity_time'] = "null"
+                            #raw_entry['end_activity_time'] = query_end_timestamp + timezone_offset
+                        raw_entry['activity_type'] = 0
+                        raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'SLEEPING', entry['duration_mins'])
+                        #raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'sleep', entry['duration_mins'])
                         raw_entry['max_hr'] = entry['max_hr']
                         raw_entry['avg_hr'] = entry['avg_hr']
                         raw_entry['intensity'] = -1
@@ -212,17 +218,20 @@ class GetActivityView(View):
                         raw_entry['background_flag'] = -1 
                         raw_entry['time_flag'] = -1                       
                         response_data.append(raw_entry) 
-                    if (getTime(entry['end_date_time']) == 'morning' or getTime(entry['end_date_time']) == 'night')\
+                    elif (getTime(entry['end_date_time']) == 'morning' or getTime(entry['end_date_time']) == 'night')\
                          and end_timestamp >= query_start_timestamp \
                          and end_timestamp <= query_end_timestamp: # user is waking up
                         raw_entry = {}
-                        if start_timestamp >= query_start_timestamp: # user is going to sleep after midnight
+                        if start_timestamp >= query_start_timestamp: 
+                            # user is going to sleep after midnight
                             raw_entry['start_activity_time'] = start_timestamp + timezone_offset
                         else: 
-                            raw_entry['start_activity_time'] = query_start_timestamp + timezone_offset
+                            # user is going to sleep before midnight (ie. last night)
+                            raw_entry['start_activity_time'] = 'null'
                         raw_entry['end_activity_time'] = end_timestamp + timezone_offset
                         raw_entry['activity_type'] = 0
-                        raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'wakeup', entry['duration_mins'])
+                        raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'SLEEPING', entry['duration_mins'])
+                        #raw_entry['story_line'] = getStory(entry['start_date_time'], entry['end_date_time'], 'wakeup', entry['duration_mins'])
                         raw_entry['max_hr'] = entry['max_hr']
                         raw_entry['avg_hr'] = entry['avg_hr']
                         raw_entry['intensity'] = -1
