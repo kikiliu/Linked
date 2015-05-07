@@ -1,7 +1,7 @@
 app.directive('heartRateChart', function() {
   var heartRateColor = "#EF9aaa";
   var normalHeartRateColor = "#CF4858";
-  var sleepColor = "#3E5D7E";//email
+  var sleepColor = "#3E5D7E";
   var walkColor = "#F4AC02";//yellow
   var runColor = "#16A79D";//green
 
@@ -66,7 +66,7 @@ app.directive('heartRateChart', function() {
         },
         1: {
           type: "line",
-          lineDashStyle: [8,4],
+          //lineDashStyle: [8,4],
           color: normalHeartRateColor,
         },
         2: {
@@ -78,14 +78,28 @@ app.directive('heartRateChart', function() {
         },
         3: {
           type: "area",
+          color: sleepColor,
+          areaOpacity: 0.3,
+          connectSteps: false,
+          lineWidth: 0
+        },       
+        4: {
+          type: "area",
           color: walkColor,
           areaOpacity: 0.3,
           connectSteps: false,
           lineWidth: 0
         },
-        4: {
+        5: {
           type: "area",
           color: runColor,
+          areaOpacity: 0.3,
+          connectSteps: false,
+          lineWidth: 0
+        },
+        6: {
+          type: "area",
+          color: sleepColor,
           areaOpacity: 0.3,
           connectSteps: false,
           lineWidth: 0

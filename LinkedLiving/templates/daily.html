@@ -69,15 +69,20 @@
 					heart-rate-data="heartRateData" activity-data="activityData"
 					definition="definition"></div>
 				<div id="side-note">
-					<div id="howto">
+					<div id="note">
 						<div class="side-title">
-							<img src="/static/images/howto.gif">
-							<div class="side-title-text">How can I interpret the data?</div>
+							<img src="/static/images/note.gif">
+							<div class="side-title-text">Personal notes</div>
 						</div>
-						<p class="hover-text">Hover the pointer over a graph of your
-							interest.</p>
-						<p class="hide">A number of studies find that higher average
-							heart rate during sleep is a cardiovascular risk factor.</p>
+						<button class="add-comment">
+								<img id="add-icon" src="/static/images/add.gif">
+									<div class="side-title">
+										<img
+										src="http://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/char_26725.jpg">
+									<div class="hover-text">Add your comment</div>
+							</div>
+						</button>
+						<p class="hover-text">Experienced any irregular conditions such as sensation, pain, fainting, or difficulty breathing during the day?</p>
 					</div>
 					<div id="comment">
 						<div class="side-title">
@@ -98,24 +103,21 @@
 								<p>"Mom, I feel your heart rate during sleep may be
 									improving a bit over time and it may be because you do more
 									exercise recently."</p>
-								<div class="comment-button">
-									<span class="button">See this data</span>
-								</div>
 							</li>
 						</ul>
-						<div class="add-comment">
+						<button class="add-comment">
 							<img id="add-icon" src="/static/images/add.gif">
 							<div class="side-title">
 								<img
 									src="http://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/char_26725.jpg">
 								<div class="hover-text">Add your comment</div>
 							</div>
-						</div>
+						</button>
 					</div>
 				</div>
 				<div id="main-charts">
 					<ul class="repeater">
-						<li class="timeline-top"></li>
+<!-- 						<li class="timeline-top"></li> -->
 						<li ng-repeat="activity in activityData | orderBy:'start_activity_time'">
 							<div class="time-range">
 								<div>{{activity.start_activity_time*1000 | date:'HH:mm'}}</div>
@@ -147,11 +149,36 @@
 										</div>
 									</div>
 								</div>
+								<!-- repeat for variation -->
+<!-- 								<div class="background"
+									style="background-image: url('{{activity.background_image}}')">
+									<div class="figure"
+										style="background-image: url('{{activity.figure_image}}')">
+										<div class="story-line">
+											<div>{{activity.story_line}}</div>
+										</div>
+										<div class="activity-info">
+										<div ng-if="activity.max_hr>0 || activity.avg_hr>0">
+											<img
+												src="/static/images/heart_mini.png" />
+											<div ng-if="activity.max_hr>0">Highest: {{activity.max_hr}}</div>
+											<div ng-if="activity.avg_hr>0">Average: {{activity.avg_hr}}</div>
+											</div>
+											<div ng-if="activity.steps>0">
+											<img
+												src="/static/images/mobility_mini.png" />
+											<div>{{activity.steps}} steps</div>
+											<div ng-if="activity.intensity==0">Low intensity</div>
+											</div>
+
+										</div>
+									</div>
+								</div>		 -->						
 								<div class="dash-gap"></div>
 							</div>
 
 						</li>
-						<li class="timeline-bottom"></li>
+<!-- 						<li class="timeline-bottom"></li> -->
 					</ul>
 				</div>
 			</section>
