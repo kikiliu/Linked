@@ -2,7 +2,7 @@ from django.db import models
 from random import choice
 import datetime
 from email import email
-from bson.json_util import default
+#from bson.json_util import default
 
 class GearSensor(models.Model):
     user = models.ForeignKey('UserInformation')
