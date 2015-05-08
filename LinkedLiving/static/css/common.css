@@ -100,7 +100,14 @@ section{
 
 /* comments
 */
-
+.end{
+	clear:both;
+}
+#side-note input{
+	margin:20px 0px;
+	height:100px;
+	width:220px;
+}
 
 #side-note{
 	border-left: 1px solid #CDCAB9;
@@ -117,7 +124,7 @@ section{
 
 .side-title-text{
 	padding-left:60px;
-	margin-bottom:30px;
+	padding-top:5px;
 }
 
 .hover-text{
@@ -125,6 +132,7 @@ section{
 }
 .comment-record{
 	clear:both;
+	margin-top:15px;
 }
 
 .comment-record img{
@@ -136,21 +144,34 @@ section{
 	font-size:14px;
 }
 
+.add-comment >button{
+	border:0;
+	padding:0;
+	background-color: transparent;
+	text-align: left;
+}
+
+.add-comment{
+	margin-top:15px;
+}
 
 .add-comment img{
 	height: 40px;
 	width:40px;
 	border-radius:20px;
+	float:left;
 }
 
 #add-icon{
-	height:30px;
+	height:34px;
 	width:35px;
-	float:left;
-	padding-top:5px;
+	padding-top:9px;
 	padding-right:10px;
 }
 
 .add-comment .hover-text{
-	padding-left:80px;
+	padding-left:10px;
+	font-size:16px;
+	padding-top:10px;
+	float:left;
 }

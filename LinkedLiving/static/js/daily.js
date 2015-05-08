@@ -235,14 +235,42 @@ app.controller("daily-info-controller", function($scope, $http) {
       var activities = json_data["table"];
       for(var i=0;i<activities.length;++i) {
         var activity = activities[i];
-        console.log(activity);
         if (activity.background_flag >0 && activity.time_flag > 0)
              {activity.background = "/static/images/"+ background[activity.background_flag][activity.time_flag] +".png"}
         activity.figure = "/static/images/"+ figure[activity.activity_type] +".png";
-        console.log(activity.figure);        
+      
         }
       $scope.activityData = json_data["table"];
     });
   }
   
+  $scope.comments = [{
+      user:"Sarah",
+      profile:"sarah.png",
+      date:"4/2/2015",
+      content:"'Mom, I am glad that you took a walk this morning in good weather.'"
+  }];
+  
+  $scope.cancelComment = function(){
+    $scope.inputBox=false;
+    $scope.commentContent = "";
+  }
+  $scope.submitNewComment=function(){
+    var now = new Date();
+    var newComment={user:"Maggy", profile:"maggy.png", date:now, content:$scope.commentContent};
+    $scope.comments.splice(0,0,newComment);
+    $scope.cancelPost();
+  }
+  
+  $scope.notes = [];
+  $scope.cancelNote = function(){
+    $scope.noteBox=false;
+    $scope.noteContent="";
+  }
+  $scope.submitNewNote=function(){
+    var now = new Date();
+    var newNote={date:now,content:$scope.noteContent};
+    $scope.notes.splice(0,0,newNote);
+    $scope.cancelNote();
+  }
 });
