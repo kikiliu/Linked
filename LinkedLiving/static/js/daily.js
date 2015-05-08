@@ -33,7 +33,7 @@ app.directive('dailyChart', function() {
       
       for(var i=0;i<heartRateData.length;i++) {
         var time = new Date(heartRateData[i].time_stamp*1000);
-        var row = [time, heartRateData[i].avg_hr, 120, null, null, null,null,null];
+        var row = [time, heartRateData[i].avg_hr, 150, null, null, null,null,null];
         dataTable.addRow(row);
       }
       for (var i = 0; i < activityData.length; ++i) {
@@ -232,9 +232,10 @@ app.controller("daily-info-controller", function($scope, $http) {
     var figure = ["wake_up", "wake_up", "walk","run","nap"];
     
     request.success(function(json_data) {
-
-      for (var activity in json_data["table"]) {
-        console.log(activity.activity_type);
+      var activities = json_data["table"];
+      for(var i=0;i<activities.length;++i) {
+        var activity = activities[i];
+        console.log(activity);
         if (activity.background_flag >0 && activity.time_flag > 0)
              {activity.background = "/static/images/"+ background[activity.background_flag][activity.time_flag] +".png"}
         activity.figure = "/static/images/"+ figure[activity.activity_type] +".png";
