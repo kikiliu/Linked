@@ -381,7 +381,7 @@ class GetHealthInfoView(View):
         if len(avg_hr_weekly_total) == 0:
             response_data['avg_hr_weekly_benchmark'] = 0
         else:
-            response_data['avg_hr_weekly_benchmark'] = sum(avg_hr_weekly_total)*1.0/len(avg_hr_weekly_total)
+            response_data['avg_hr_weekly_benchmark'] = int(sum(avg_hr_weekly_total)*1.0/len(avg_hr_weekly_total))
         
         #avg_hr_target
         response_data['avg_hr_target'] = 80
@@ -397,14 +397,15 @@ class GetHealthInfoView(View):
                 if entry['mins_label'] != 'NOT_MOVING':
                     total_steps += int(entry['mins_total_steps'])
             if ((query_start_date_time.date() - todatetime(timestamp).date()).days % 7 == 0) and (todatetime(timestamp).date() != query_start_date_time.date() ):
-                total_steps_weekly_total.append(int(entry['mins_total_steps']))
-                total_steps_weekly_date.append(todatetime(timestamp).date())
+                if entry['mins_mannual_labels'] != 'Sleep' and entry['mins_total_steps'] <= 200:
+                    total_steps_weekly_total.append(int(entry['mins_total_steps']))
+                    total_steps_weekly_date.append(todatetime(timestamp).date())
         response_data['total_steps'] = total_steps
         #total_steps_weekly_benchmark
         if len(set(total_steps_weekly_date)) == 0:
             response_data['total_steps_weekly_benchmark'] = 0
         else:
-            response_data['total_steps_weekly_benchmark'] = sum(total_steps_weekly_total)/ len(set(total_steps_weekly_date))
+            response_data['total_steps_weekly_benchmark'] = int(sum(total_steps_weekly_total)/ len(set(total_steps_weekly_date)))
 
         #total_steps_target
         response_data['total_steps_target'] = 2500
@@ -431,7 +432,7 @@ class GetHealthInfoView(View):
         if len(set(exercise_time_weekly_date)) == 0:
             response_data['exercise_time_weekly_benchmark'] = 0
         else:
-            response_data['exercise_time_weekly_benchmark'] = sum(exercise_time_weekly_total)/ len(set(exercise_time_weekly_date))
+            response_data['exercise_time_weekly_benchmark'] = int(sum(exercise_time_weekly_total)/ len(set(exercise_time_weekly_date)))
         #exercise_time_target
         response_data['exercise_time_target'] = 20
 
@@ -455,7 +456,7 @@ class GetHealthInfoView(View):
 
         # story line:
         if response_data['avg_hr'] == 0 or response_data['avg_hr_weekly_benchmark'] == 0:
-            response_data['avg_hr_storyline'] = "Not enough info."
+            response_data['avg_hr_storyline'] = "No data to measure."
         else:
             ratio = response_data['avg_hr']*1.0/ response_data['avg_hr_weekly_benchmark']
 
@@ -468,7 +469,7 @@ class GetHealthInfoView(View):
 
         # story line:
         if response_data['exercise_time'] == 0 or response_data['exercise_time_weekly_benchmark'] == 0:
-            response_data['exercise_time_storyline'] = "Not enough info."
+            response_data['exercise_time_storyline'] = "No data to measure."
         else:
             ratio = response_data['exercise_time']*1.0/ response_data['exercise_time_weekly_benchmark']
 
@@ -481,7 +482,7 @@ class GetHealthInfoView(View):
 
         # story line:
         if response_data['total_steps'] == 0 or response_data['total_steps_weekly_benchmark'] == 0:
-            response_data['total_steps_storyline'] = "Not enough info."
+            response_data['total_steps_storyline'] = "No data to measure."
         else:
             ratio = response_data['total_steps']*1.0/ response_data['total_steps_weekly_benchmark']
 
