@@ -30,9 +30,7 @@
 	<div class="page">
 		<header class="header" role="navigation">
 			<div class="logo">
-				<img
-					src="https://raw.githubusercontent.com/kikiliu/Linked/master/LinkedLiving/static/images/cross.png" />
-				<span>LinkedLiving</span>
+				<img src="/static/images/cross.png" /> <span>LinkedLiving</span>
 			</div>
 			<ul class="view-tabs">
 				<li class="tab active-tab">Daily Digest</li>
@@ -62,7 +60,52 @@
 					</ul>
 				</div>
 			</div>
-			<section></section>
+			<section id="daily-digest">
+				<div id="digest-columns">
+					<ul>
+						<li>
+							<div class="gauge-header">
+								<div class="gauge-icon">
+									<img src="/static/images/heart.gif"><br /> <span>Heart</span>
+								</div>
+								<div class="gauge-title">{{healthInfo.avg_hr_storyline}}</div>
+							</div>
+							<div class="unit">(beats / minute)</div> 
+							<health-gauge date="date" value="healthInfo.avg_hr" color="'#ff3333'"
+								average="healthInfo.avg_hr_weekly_benchmark"
+								target="healthInfo.avg_hr_target"
+								target-name="'Average HR of your age group'" />
+						</li>
+						<li>
+							<div class="gauge-header">
+								<div class="gauge-icon">
+									<img src="/static/images/run.gif"><br/><span>Activities</span>
+								</div>
+								<div class="gauge-title">{{healthInfo.exercise_time_storyline}}</div>
+							</div>
+							<div class="unit">(minutes)</div> 
+							<health-gauge date="date" value="healthInfo.exercise_time" color="'#33ff33'"
+								average="healthInfo.exercise_time_weekly_benchmark"
+								target="healthInfo.exercise_time_target"
+								target-name="'Target'" />
+						</li>
+						<li>
+							<div class="gauge-header">
+								<div class="gauge-icon">
+									<img src="/static/images/mobility.gif"><br/><span>Mobility</span>
+								</div>
+								<div class="gauge-title">{{healthInfo.total_steps_storyline}}</div>
+							</div>
+							<div class="unit">(steps)</div> 
+							<health-gauge date="date" value="healthInfo.total_steps" color="'#ff33ff'"
+								average="healthInfo.total_steps_weekly_benchmark"
+								target="healthInfo.total_steps_target"
+								target-name="'Target'" />
+						</li>
+						<div class="end"></div>
+					</ul>
+				</div>
+			</section>
 			<section id="daily-charts">
 				<div id="legend">
 					<image src="/static/images/sleep.gif" />
@@ -86,9 +129,10 @@
 								<img id="add-icon" src="/static/images/add.gif">
 								<div class="hover-text">Add your comment</div>
 							</button>
-							<div class="hover-text" id="watermark" ng-show="!noteBox&&notes.length==0">Experienced any irregular conditions
-							such as sensation, pain, fainting, or difficulty breathing during
-							the day?</div>
+							<div class="hover-text" id="watermark"
+								ng-show="!noteBox&&notes.length==0">Experienced any
+								irregular conditions such as sensation, pain, fainting, or
+								difficulty breathing during the day?</div>
 							<div ng-show="noteBox">
 								<input type="text" ng-model="noteContent">
 								<button class="cancel" ng-click="cancelNote()">Cancel</button>
@@ -97,7 +141,8 @@
 						</div>
 						<ul>
 							<li class="comment-record" ng-repeat="note in notes">
-								<div class="comment-date">{{note.date | date:'MM/dd/yyyy'}}</div>
+								<div class="comment-date">{{note.date |
+									date:'MM/dd/yyyy'}}</div>
 								<div>{{note.content}}</div>
 							</li>
 						</ul>
@@ -109,8 +154,8 @@
 						</div>
 						<div class="add-comment">
 							<button ng-click="inputBox=true">
-								<img id="add-icon" src="/static/images/add.gif">
-								<img src="/static/images/maggy.png">
+								<img id="add-icon" src="/static/images/add.gif"> <img
+									src="/static/images/maggy.png">
 								<div class="hover-text">Add your comment</div>
 							</button>
 							<div ng-show="inputBox">
@@ -125,7 +170,8 @@
 									<img src='/static/images/{{comment.profile}}'>
 									<div class="side-title-text">
 										<div class="comment-name">{{comment.user}} said</div>
-										<div class="comment-date">on {{comment.date | date:'MM/dd/yyyy'}}</div>
+										<div class="comment-date">on {{comment.date |
+											date:'MM/dd/yyyy'}}</div>
 									</div>
 									<div class="end"></div>
 								</div>

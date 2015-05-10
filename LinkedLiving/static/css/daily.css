@@ -1,126 +1,174 @@
-/*css for daily page*/
-
-.datetime{
-	font-size:23px;
+/*css for daily selector*/
+.datetime {
+	font-size: 23px;
 	width: 250px;
 	padding: 0 20px;
 	display: inline-block;
 }
 
-#daily-selector{
-	background-color:#432F21;
-	text-align:center;
+#daily-selector {
+	background-color: #432F21;
+	text-align: center;
 	color: white;
 	padding: 5px 0 25px 0;
-	position:relative;
+	position: relative;
 }
 
-#daily-selector button{
-  background-color: inherit;
-  padding: 0px;
-  border-width: 0px;
+#daily-selector button {
+	background-color: inherit;
+	padding: 0px;
+	border-width: 0px;
 }
 
+#digest-columns {
+	background-color: white;
+}
 
+#digest-columns ul {
+	background-color: #432F21;
+}
+
+/*css for daily digest*/
+#digest-columns ul li {
+	margin-left: 20px;
+	float: left;
+	height: 300px;
+	width: 300px;
+	text-align: center;
+}
+
+#digest-columns ul li:first-child {
+	margin-left: 0px;
+}
+
+.gauge-header {
+	overflow: hidden;
+	background-color:#D6D3C4;
+	font-size: 14px;
+	padding: 10px 30px 10px 30px;
+}
+
+.gauge-icon {
+	float: left;
+}
+
+.gauge-title {
+	padding-top: 10px;
+}
+
+#digest-columns .unit {
+	position: absolute;
+	background_color: transparent;
+	z-index: 100;
+	padding: 10px 0 0 20px;
+	font-size: 12px;
+}
+health-gauge {
+	height: 215px;
+	display: block;
+}
+
+/*css for daily detail chart and activity narrative*/
 #legend {
 	text-align: right;
-	font-size:14px;
+	font-size: 14px;
 }
 
 #legend span {
 	margin-right: 40px;
 }
 
-#daily-charts{
-	padding:35px 0px 60px 40px;
-	overflow:auto;/*parent stretch to contain float child*/
+#daily-charts {
+	padding: 35px 0px 60px 40px;
+	overflow: auto; /*parent stretch to contain float child*/
+	margin-top: 20px;
 }
 
 #main_chart {
 	height: 400px;
-	margin-right:40px;
+	margin-right: 40px;
 }
 
-.activities{
-  clear:both;
-  padding:30px 0px;
+.activities {
+	clear: both;
+	padding: 30px 0px;
 }
 
-
-.time-range{
-  width:50px;
-  float:left;
-  text-align:right;
-}
-.from-to{
-  font-size:25px;
+.time-range {
+	width: 50px;
+	float: left;
+	text-align: right;
 }
 
-
-.background, .figure{
-  height:180px;
-  width:500px;
-  background-repeat:no-repeat;
+.from-to {
+	font-size: 25px;
 }
 
-.figure{
+.background, .figure {
+	height: 180px;
+	width: 500px;
+	background-repeat: no-repeat;
+}
+
+.figure {
 	position: relative;
 }
-.background, .timeline-top, .timeline-bottom{
-  border-left:solid 3px #C9C9C9;
-  margin-left:60px;
+
+.background, .timeline-top, .timeline-bottom {
+	border-left: solid 3px #C9C9C9;
+	margin-left: 60px;
 }
 
 .timeline-top {
-	height: 20px;	
+	height: 20px;
 }
 
-.timeline-bottom{
-  height:30px;
+.timeline-bottom {
+	height: 30px;
 }
 
-.dash-gap{
-  border-left:dotted 3px #C9C9C9;
-  margin:5px 0 5px 60px;
-  height:50px;
+.dash-gap {
+	border-left: dotted 3px #C9C9C9;
+	margin: 5px 0 5px 60px;
+	height: 50px;
 }
 
-.figure{
-  position:relative;
+.figure {
+	position: relative;
 }
 
-.story-line{
-  position:absolute;
-  right:15px;
-  top:15px;
-  text-align:right;
+.story-line {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	text-align: right;
 }
 
-.activity-info{
-  position:absolute;
-  right:15px;
-  bottom:15px;
-  font-size:16px;
-  margin-right:41px;/*same as img size+padding,b/c img is float*/
+.activity-info {
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+	font-size: 16px;
+	margin-right: 41px; /*same as img size+padding,b/c img is float*/
 }
 
-.activity-info >div{
-  white-space: nowrap
+.activity-info>div {
+	white-space: nowrap
 }
 
-.activity-info img{
-  float:left;
-  margin-right: 15px;
+.activity-info img {
+	float: left;
+	margin-right: 15px;
 }
 
-.footer{
-  clear:both;
-  height:36px;
-  background-color: #FFFFFF;
-  border-top:solid 3px #f2a5cd;
-  margin-top:30px;
+.footer {
+	clear: both;
+	height: 36px;
+	background-color: #FFFFFF;
+	border-top: solid 3px #f2a5cd;
+	margin-top: 30px;
 }
 
-#personal-note, #watermark{
-	margin-bottom:60px;
+#personal-note, #watermark {
+	margin-bottom: 60px;
 }
