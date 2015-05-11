@@ -10,18 +10,18 @@
 
 <script type="text/javascript"
 	src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
-<script src="/static/js/common.js"></script>
-<script src="/static/js/daily.js"></script>
-<script src="/static/js/datetimepicker.js"></script>
+<script src="./static/js/common.js"></script>
+<script src="./static/js/daily.js"></script>
+<script src="./static/js/datetimepicker.js"></script>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Cabin'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="/static/css/daily.css">
-<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="./static/css/daily.css">
+<link rel="stylesheet" type="text/css" href="./static/css/common.css">
 <link rel="stylesheet" type="text/css"
-	href="/static/css/datetimepicker.css">
+	href="./static/css/datetimepicker.css">
 <meta charset="utf-8">
 <title>LinkedLiving</title>
 </head>
@@ -30,11 +30,11 @@
 	<div class="page">
 		<header class="header" role="navigation">
 			<div class="logo">
-				<img src="/static/images/logo.png" />
+				<img src="./static/images/logo.png" />
 			</div>
 			<ul class="view-tabs">
 				<li class="tab active-tab">Daily Digest</li>
-				<li class="tab"><a href="/trend">Trends</a></li>
+				<li class="tab"><a href="./trend">Trends</a></li>
 			</ul>
 			<ul class="menu">
 				<li><a href="#">Help</a></li>
@@ -52,7 +52,7 @@
 				<div class="dropdown">
 					<button class="dropdown-toggle" id="dropdown1"
 						data-toggle="dropdown" data-target="#" href="#">
-						<img src="/static/images/period_w.gif" />Pick another date
+						<img src="./static/images/period_w.gif" />Pick another date
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<datetimepicker data-ng-model="date"
@@ -66,7 +66,7 @@
 						<li>
 							<div class="gauge-header">
 								<div class="gauge-icon">
-									<img src="/static/images/heart.gif"><br /> <span>Heart</span>
+									<img src="./static/images/heart.gif"><br /> <span>Heart</span>
 								</div>
 								<div class="gauge-title">{{healthInfo.avg_hr_storyline}}</div>
 							</div>
@@ -79,7 +79,7 @@
 						<li>
 							<div class="gauge-header">
 								<div class="gauge-icon">
-									<img src="/static/images/run.gif"><br/><span>Activities</span>
+									<img src="./static/images/run.gif"><br/><span>Activities</span>
 								</div>
 								<div class="gauge-title">{{healthInfo.exercise_time_storyline}}</div>
 							</div>
@@ -92,7 +92,7 @@
 						<li>
 							<div class="gauge-header">
 								<div class="gauge-icon">
-									<img src="/static/images/mobility.gif"><br/><span>Mobility</span>
+									<img src="./static/images/mobility.gif"><br/><span>Mobility</span>
 								</div>
 								<div class="gauge-title">{{healthInfo.total_steps_storyline}}</div>
 							</div>
@@ -108,11 +108,11 @@
 			</section>
 			<section id="daily-charts">
 				<div id="legend">
-					<image src="/static/images/sleep.gif" />
+					<image src="./static/images/sleep.gif" />
 					<span>Sleep</span>
-					<image src="/static/images/walk.gif" />
+					<image src="./static/images/walk.gif" />
 					<span>Walk</span>
-					<image src="/static/images/run.gif" />
+					<image src="./static/images/run.gif" />
 					<span>Run</span>
 				</div>
 				<div id="main_chart" daily-chart date="date"
@@ -121,12 +121,12 @@
 				<div id="side-note">
 					<div id="personal-note">
 						<div class="side-title">
-							<img src="/static/images/note.gif">
+							<img src="./static/images/note.gif">
 							<div class="side-title-text">Personal notes</div>
 						</div>
 						<div class="add-comment">
 							<button ng-click="noteBox=true">
-								<img id="add-icon" src="/static/images/add.gif">
+								<img id="add-icon" src="./static/images/add.gif">
 								<div class="hover-text">Add your comment</div>
 							</button>
 							<div class="hover-text" id="watermark"
@@ -149,13 +149,13 @@
 					</div>
 					<div id="comment">
 						<div class="side-title">
-							<img src="/static/images/comment.gif">
+							<img src="./static/images/comment.gif">
 							<div class="side-title-text">Comments</div>
 						</div>
 						<div class="add-comment">
 							<button ng-click="inputBox=true">
-								<img id="add-icon" src="/static/images/add.gif"> <img
-									src="/static/images/maggy.png">
+								<img id="add-icon" src="./static/images/add.gif"> <img
+									src="./static/images/maggy.png">
 								<div class="hover-text">Add your comment</div>
 							</button>
 							<div ng-show="inputBox">
@@ -202,14 +202,14 @@
 										</div>
 										<div class="activity-info">
 											<div ng-if="activity.max_hr>0 || activity.avg_hr>0">
-												<img src="/static/images/heart_mini.png" />
+												<img src="./static/images/heart_mini.png" />
 												<div ng-if="activity.max_hr>0">Highest:
 													{{activity.max_hr}}</div>
 												<div ng-if="activity.avg_hr>0">Average:
 													{{activity.avg_hr}}</div>
 											</div>
 											<div ng-if="activity.steps>0">
-												<img src="/static/images/mobility_mini.png" />
+												<img src="./static/images/mobility_mini.png" />
 												<div>{{activity.steps}} steps</div>
 												<div ng-if="activity.intensity==0">Low intensity</div>
 											</div>

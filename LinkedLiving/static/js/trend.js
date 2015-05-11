@@ -100,9 +100,9 @@ app
                   var green = "#16A79D";
                   var purple = "#80628B";
 
-                  var hrIcon = "/static/images/heart.gif";
-                  var actIcon = "/static/images/run.gif";
-                  var mobIcon = "/static/images/mobility.gif";
+                  var hrIcon = "./static/images/heart.gif";
+                  var actIcon = "./static/images/run.gif";
+                  var mobIcon = "./static/images/mobility.gif";
 
                   $scope.showDays = function(timedelta) {
                     if (timedelta == null) {
@@ -309,7 +309,7 @@ app
                     $scope.startDate = start;
                     $scope.endDate = end;
 
-                    var url = "/api/get_trend";
+                    var url = "./api/get_trend";
 
                     var request_parameters = {
                       user_id: 123,

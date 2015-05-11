@@ -290,8 +290,9 @@ app
                 "daily-info-controller",
                 function($scope, $http) {
                   var red = "#CF4858";
-                  $scope.date = new Date();// 2015, 4, 1, 0, 0 -> May 1, 2015
-
+                  
+                  today = new Date();// 2015, 4, 1, 0, 0 -> May 1, 2015
+                  $scope.date = new Date(today.getFullYear(),today.getMonth(), today.getDate(), 0, 0);
                   $scope.gotoPreviousDay = function() {
                     $scope.date = new Date($scope.date.getTime() - 24 * 60 * 60
                             * 1000);
@@ -303,7 +304,7 @@ app
                   }
 
                   function getHeartRateData() {
-                    var url = "/api/get_daily";
+                    var url = "./api/get_daily";
 
                     var request_parameters = {
                       user_id: 123,
@@ -364,11 +365,11 @@ app
                                 var activity = activities[i];
                                 if (activity.background_flag > 0
                                         && activity.time_flag > 0) {
-                                  activity.background = "/static/images/"
+                                  activity.background = "./static/images/"
                                           + background[activity.background_flag][activity.time_flag]
                                           + ".png"
                                 }
-                                activity.figure = "/static/images/"
+                                activity.figure = "./static/images/"
                                         + figure[activity.activity_type]
                                         + ".png";
 

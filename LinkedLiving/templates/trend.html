@@ -4,16 +4,16 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.js"></script>
 <script type="text/javascript"
 	src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
-<script src="/static/js/common.js"></script>
-<script src="/static/js/trend.js"></script>
-<script src="/static/js/datetimepicker.js"></script>
+<script src="./static/js/common.js"></script>
+<script src="./static/js/trend.js"></script>
+<script src="./static/js/datetimepicker.js"></script>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Cabin'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="/static/css/trend.css">
-<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="./static/css/trend.css">
+<link rel="stylesheet" type="text/css" href="./static/css/common.css">
 <meta charset="utf-8">
 <title>LinkedLiving</title>
 </head>
@@ -23,10 +23,10 @@
 		<header class="header" role="navigation">
 			<div class="logo">
 				<img
-					src="/static/images/logo.png" />
+					src="./static/images/logo.png" />
 			</div>
 			<ul class="view-tabs">
-				<li class="tab"><a href="/daily">Daily Digest</a></li>
+				<li class="tab"><a href="./daily">Daily Digest</a></li>
 				<li class="tab active-tab">Trends</li>
 			</ul>
 			<ul class="menu">
@@ -40,7 +40,7 @@
 				<div id="columns" ng-show="isOptionsExpanded">
 					<ul>
 						<li class="selector" id="heart-rate"><img
-							src="/static/images/heart.gif"> <span
+							src="./static/images/heart.gif"> <span
 							class="selector-title">Heart Rate (HR)</span>
 							<ul>
 								<li ng-repeat="definition in definitions | filter:isType('hr')">
@@ -52,7 +52,7 @@
 <!-- 										Deselect all</span></li> -->
 							</ul></li>
 						<li class="selector" id="activity"><img
-							src="/static/images/run.gif"> <span class="selector-title">Activities</span>
+							src="./static/images/run.gif"> <span class="selector-title">Activities</span>
 							<ul>
 								<li
 									ng-repeat="definition in definitions | filter:isType('activity')">
@@ -64,7 +64,7 @@
 <!-- 										Deselect all</span></li> -->
 							</ul></li>
 						<li class="selector" id="mobility"><img
-							src="/static/images/mobility.gif"> <span
+							src="./static/images/mobility.gif"> <span
 							class="selector-title">Mobility</span>
 							<ul>
 								<li
@@ -78,7 +78,7 @@
 				</div>
 				<div id="time">
 					<div class="selector-title">
-						<img src="/static/images/period.gif"> <span>Date
+						<img src="./static/images/period.gif"> <span>Date
 							Range</span>
 					</div>
 					<ul>
@@ -117,13 +117,13 @@
 				<div id="side-note">
 					<div id="comment">
 						<div class="side-title">
-							<img src="/static/images/comment.gif">
+							<img src="./static/images/comment.gif">
 							<div class="side-title-text">Comments</div>
 						</div>
 						<div class="add-comment">
 							<button ng-click="inputBox=true">
-								<img id="add-icon" src="/static/images/add.gif"> <img
-									src="/static/images/maggy.png">
+								<img id="add-icon" src="./static/images/add.gif"> <img
+									src="./static/images/maggy.png">
 								<div class="hover-text">Add your comment</div>
 							</button>
 							<div ng-show="inputBox">
@@ -156,7 +156,7 @@
 								<img ng-src="{{definition.icon}}"> <span>{{definition.label}}</span>
 								<span class="chart-unit">{{definition.unit}}</span>
 								<button class="chart-cancel" ng-click="definition.toggle=false">
-									<img src="/static/images/cancel.gif">
+									<img src="./static/images/cancel.gif">
 								</button>
 							</div>
 							<div chart data="data" definition="definition"></div>
