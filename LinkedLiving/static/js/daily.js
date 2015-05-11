@@ -55,7 +55,7 @@ app.directive('healthGauge', function() {
           type: "line",
           color: scope.color,
           lineDashStyle: [2,2],
-          labelInLegend: "Target",
+          labelInLegend: scope.legend,
           visibleInLegend: true,
         },
       },
@@ -75,10 +75,10 @@ app.directive('healthGauge', function() {
           color: 'transparent'
         }
       },
-      animation: {
+/*      animation: {
         startup: true,
         duration: 200
-      }
+      }*/
     };
 
     element.innerHTML = "";
@@ -92,6 +92,7 @@ app.directive('healthGauge', function() {
       date: "=",
       value: "=",
       color: "=",
+      legend: "=",
       average: "=",
       target: "=",
       targetName: "=",
@@ -289,7 +290,7 @@ app
                 "daily-info-controller",
                 function($scope, $http) {
                   var red = "#CF4858";
-                  $scope.date = new Date(2015, 3, 1, 0, 0, 0);// april 1, 2015
+                  $scope.date = new Date();// 2015, 4, 1, 0, 0 -> May 1, 2015
 
                   $scope.gotoPreviousDay = function() {
                     $scope.date = new Date($scope.date.getTime() - 24 * 60 * 60
@@ -399,7 +400,7 @@ app
                   $scope.comments = [{
                     user: "Sarah",
                     profile: "sarah.png",
-                    date: "4/2/2015",
+                    date: "4/15/2015",
                     content: "'Mom, I am glad that you took a walk this morning in good weather.'"
                   }];
 

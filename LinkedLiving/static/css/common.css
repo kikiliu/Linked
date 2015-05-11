@@ -21,13 +21,13 @@ body{
 }
 
 .logo{
-  font-size:28px;
-  margin:22px;
-  float:left
+  margin:17px 22px;
+  float:left;
 }
 
 .logo > *{
     vertical-align: middle;
+    width:300px;
 }/*apply to immediate children*/
 
 ul{

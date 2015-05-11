@@ -81,7 +81,7 @@ function drawVisualization(element, dataTable, definition) {
     fontName: 'Cabin',
     animation: {
       startup: true,
-      duration: 500
+      duration: 200
     }
   };
   element.innerHTML = "";

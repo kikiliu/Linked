@@ -30,7 +30,7 @@
 	<div class="page">
 		<header class="header" role="navigation">
 			<div class="logo">
-				<img src="/static/images/cross.png" /> <span>LinkedLiving</span>
+				<img src="/static/images/logo.png" />
 			</div>
 			<ul class="view-tabs">
 				<li class="tab active-tab">Daily Digest</li>
@@ -71,7 +71,7 @@
 								<div class="gauge-title">{{healthInfo.avg_hr_storyline}}</div>
 							</div>
 							<div class="unit">(beats / minute)</div> 
-							<health-gauge date="date" value="healthInfo.avg_hr" color="'#CF4858'"
+							<health-gauge date="date" value="healthInfo.avg_hr" color="'#CF4858'" legend="'Average HR of your age group'"
 								average="healthInfo.avg_hr_weekly_benchmark"
 								target="healthInfo.avg_hr_target"
 								target-name="'Average HR of your age group'" />
@@ -84,7 +84,7 @@
 								<div class="gauge-title">{{healthInfo.exercise_time_storyline}}</div>
 							</div>
 							<div class="unit">(minutes)</div> 
-							<health-gauge date="date" value="healthInfo.exercise_time" color="'#16A79D'"
+							<health-gauge date="date" value="healthInfo.exercise_time" color="'#16A79D'" legend="'Target'"
 								average="healthInfo.exercise_time_weekly_benchmark"
 								target="healthInfo.exercise_time_target"
 								target-name="'Target'" />
@@ -97,7 +97,7 @@
 								<div class="gauge-title">{{healthInfo.total_steps_storyline}}</div>
 							</div>
 							<div class="unit">(steps)</div> 
-							<health-gauge date="date" value="healthInfo.total_steps" color="'#80628B'"
+							<health-gauge date="date" value="healthInfo.total_steps" color="'#80628B'" legend="'Target'"
 								average="healthInfo.total_steps_weekly_benchmark"
 								target="healthInfo.total_steps_target"
 								target-name="'Target'" />
