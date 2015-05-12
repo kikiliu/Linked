@@ -5,6 +5,11 @@ body{
   text-align:center;/*For IE6 Shenanigans*/
 }
 
+#container{
+	background-color:#432F21;
+	width:
+}
+
 .page {
   width: 980px;
   background-color: #432F21;
@@ -18,6 +23,7 @@ body{
   overflow:hidden;/*content out of container*/
   position:relative;
   height: 80px;
+  padding-left:145px;
 }
 
 .logo{
@@ -53,7 +59,7 @@ li{
 }
 .active-tab {
 	background-color:#432F21;
-	color:#D6D3C4;
+	color:white;
 }
 
 .menu{
@@ -62,6 +68,7 @@ li{
   right:0;
   top:50%;
   margin-top:-12px;/*font-size*50%*/
+  margin-right: 160px;
 }
 
 .menu >li {

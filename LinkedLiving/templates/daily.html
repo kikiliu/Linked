@@ -26,22 +26,23 @@
 <title>LinkedLiving</title>
 </head>
 <body>
+	<div id="container">
 	{% verbatim %}
+	<header class="header" role="navigation">
+		<div class="logo">
+			<img src="./static/images/logo.png" />
+		</div>
+		<ul class="view-tabs">
+			<li class="tab active-tab">Daily Digest</li>
+			<li class="tab"><a href="./trend">Trends</a></li>
+		</ul>
+		<ul class="menu">
+			<li><a href="#">Help</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">My account</a></li>
+		</ul>
+	</header>
 	<div class="page">
-		<header class="header" role="navigation">
-			<div class="logo">
-				<img src="./static/images/logo.png" />
-			</div>
-			<ul class="view-tabs">
-				<li class="tab active-tab">Daily Digest</li>
-				<li class="tab"><a href="./trend">Trends</a></li>
-			</ul>
-			<ul class="menu">
-				<li><a href="#">Help</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">My account</a></li>
-			</ul>
-		</header>
 		<article class="daily-info" ng-controller="daily-info-controller">
 			<div id="daily-selector">
 				<div>
@@ -60,6 +61,7 @@
 					</ul>
 				</div>
 			</div>
+
 			<section id="daily-digest">
 				<div id="digest-columns">
 					<ul>
@@ -79,7 +81,7 @@
 						<li>
 							<div class="gauge-header">
 								<div class="gauge-icon">
-									<img src="./static/images/run.gif"><br/><span>Activities</span>
+									<img src="./static/images/run.gif"><br/><span>Exercise</span>
 								</div>
 								<div class="gauge-title">{{healthInfo.exercise_time_storyline}}</div>
 							</div>
@@ -187,19 +189,20 @@
 							ng-repeat="activity in activityData | orderBy:'start_activity_time==null ? 0 : start_activity_time'">
 							<div class="time-range">
 								<div ng-show="activity.start_activity_time!=null">{{activity.start_activity_time*1000
-									| date:'HH:mm'}}</div>
-								<div class="from-to" ng-if="activity.period">|</div>
+									| date:'h:mm a'}}</div>
+								<div class="from-to" ng-show="activity.start_activity_time!=null&&activity.end_activity_time!=null">|</div>
 								<div ng-show="activity.end_activity_time!=null">{{activity.end_activity_time*1000
-									| date:'HH:mm'}}</div>
+									| date:'h:mm a'}}</div>
 							</div>
 							<div class="activity">
 								<div class="background"
 									style="background-image: url('{{activity.background}}')">
 									<div class="figure"
 										style="background-image: url('{{activity.figure}}')">
-										<div class="story-line">
+										<div class="story-line" ng-show="activity.end_activity_time!=null">
 											<div>{{activity.story_line}}</div>
 										</div>
+										<div class="story-line" ng-show="activity.end_activity_time==null">Maggie went to bed.</div>
 										<div class="activity-info">
 											<div ng-if="activity.max_hr>0 || activity.avg_hr>0">
 												<img src="./static/images/heart_mini.png" />
@@ -228,5 +231,6 @@
 		<footer></footer>
 	</div>
 	{% endverbatim %}
+</div>
 </body>
 </html>

@@ -348,7 +348,7 @@ app
                       content: $scope.commentContent
                     };
                     $scope.comments.splice(0, 0, newComment);
-                    $scope.cancelPost();
+                    $scope.cancelComment();
                   }
                   $scope.showDays(30);// to be changed to desired days
                 });

@@ -106,8 +106,8 @@ app.directive('dailyChart',
           var heartRateColor = "#EF9aaa";
           var normalHeartRateColor = "#CF4858";
           var sleepColor = "#3E5D7E";
-          var walkColor = "#F4AC02";// yellow
-          var runColor = "#16A79D";// green
+          var walkColor = "#16A79D";// green
+          var runColor = "#F4AC02";// yellow
 
           function link(scope, element, attrs) {
             function update() {
@@ -134,7 +134,7 @@ app.directive('dailyChart',
 
               for (var i = 0; i < heartRateData.length; i++) {
                 var time = new Date(heartRateData[i].time_stamp * 1000);
-                var row = [time, heartRateData[i].avg_hr, 150, null, null,
+                var row = [time, heartRateData[i].avg_hr, 180, null, null,
                     null, null, null];
                 dataTable.addRow(row);
               }
@@ -182,13 +182,13 @@ app.directive('dailyChart',
                 0: {
                   type: "bars",
                   enableInteractivity: true,
-                  color: heartRateColor,
+                  color: normalHeartRateColor,
                   visibleInLegend: false
                 },
                 1: {
                   type: "line",
                   // lineDashStyle: [8,4],
-                  color: normalHeartRateColor,
+                  color: heartRateColor,
                   labelInLegend: "Average maximum heart rate for people in 70s"
                 },
                 2: {
@@ -418,7 +418,7 @@ app
                       content: $scope.commentContent
                     };
                     $scope.comments.splice(0, 0, newComment);
-                    $scope.cancelPost();
+                    $scope.cancelComment();
                   }
 
                   $scope.notes = [];

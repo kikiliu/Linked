@@ -18,9 +18,9 @@
 <title>LinkedLiving</title>
 </head>
 <body>
+	<div id="container">
 	{% verbatim %}
-	<div class="page">
-		<header class="header" role="navigation">
+			<header class="header" role="navigation">
 			<div class="logo">
 				<img
 					src="./static/images/logo.png" />
@@ -35,6 +35,8 @@
 				<li><a href="#">My account</a></li>
 			</ul>
 		</header>
+	<div class="page">
+
 		<article class="trend-data" ng-controller="trend-data-controller">
 			<section>
 				<div id="columns" ng-show="isOptionsExpanded">
@@ -168,5 +170,6 @@
 		<footer></footer>
 	</div>
 	{% endverbatim %}
+</div>
 </body>
 </html>
