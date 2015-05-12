@@ -73,6 +73,9 @@ health-gauge {
 	text-align: right;
 	font-size: 14px;
 }
+#legend img{
+	width:50px;
+}
 
 #legend span {
 	margin-right: 40px;
