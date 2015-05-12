@@ -101,7 +101,7 @@ app
                   var purple = "#80628B";
 
                   var hrIcon = "./static/images/heart.gif";
-                  var actIcon = "./static/images/run.gif";
+                  var actIcon = "./static/images/exercise.gif";
                   var mobIcon = "./static/images/mobility.gif";
 
                   $scope.showDays = function(timedelta) {
