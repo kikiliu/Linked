@@ -24,7 +24,7 @@ app.directive('chart', function() {
  */
 function createDataTable(data, definition) {
   var dataTable = new google.visualization.DataTable();
-  dataTable.addColumn('datetime', 'Date');
+  dataTable.addColumn('date', 'Date');
   for (var i = 0; i < definition.series.length; ++i) {
     dataTable.addColumn('number', definition.series[i].label);
   }
@@ -127,7 +127,7 @@ app
                     label: 'Average HR during sleep',
                     type: 'hr',
                     series: [{
-                      label: 'HR',
+                      label: 'Heart Rate',
                       field: 'avg_hr_sleep'
                     }, {
                       label: 'Trendline',
