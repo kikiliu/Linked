@@ -46,7 +46,7 @@ def getStory(start_datetime, end_datetime, label,duration):
     #get weather
     weather = None
     rand_weather = random.randint(0,9)
-    if rand_weather < 6:
+    if rand_weather < 10:
         weather = 'sunny'
     elif rand_weather < 9:
         weather = 'cloudy'
