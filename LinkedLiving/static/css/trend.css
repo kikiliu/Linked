@@ -9,7 +9,7 @@
 
 .selector {
 	border-left: 1px solid #CDCAB9;
-	padding:0px 40px;
+	padding:0px 10px 0px 40px;
 	float:left;
 	width:313px;
 	height:310px;
@@ -25,6 +25,9 @@
 	font-size:23px;
 }
 
+.question-icon{
+	width:25px;
+}
 .batch-selector{
 	font-size:14px;
 	display:block;

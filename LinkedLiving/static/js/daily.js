@@ -134,7 +134,7 @@ app.directive('dailyChart',
 
               for (var i = 0; i < heartRateData.length; i++) {
                 var time = new Date(heartRateData[i].time_stamp * 1000);
-                var row = [time, heartRateData[i].avg_hr, 180, null, null,
+                var row = [time, heartRateData[i].avg_hr, 150, null, null,
                     null, null, null];
                 dataTable.addRow(row);
               }
@@ -401,8 +401,8 @@ app
                   $scope.comments = [{
                     user: "Sarah",
                     profile: "sarah.png",
-                    date: "4/15/2015",
-                    content: "'Mom, I am glad that you took a walk this morning in good weather.'"
+                    date: "4/1/2015",
+                    content: "'Mom, I am glad that you took a walk that afternoon in good weather.'"
                   }];
 
                   $scope.cancelComment = function() {

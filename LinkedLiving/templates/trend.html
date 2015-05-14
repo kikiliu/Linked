@@ -49,7 +49,8 @@
 								<li ng-repeat="definition in definitions | filter:isType('hr')">
 									<label><input type="checkbox"
 										ng-model="definition.toggle" ng-change="toggle(definition)" />
-										<span class="button">{{definition.label}}</span></label>
+										<span class="button">{{definition.label}}</span>
+										<span><img class="question-icon" src="./static/images/question_red.gif"></span></label>
 								</li>
 <!-- 								<li><span class="batch-selector">Select all / -->
 <!-- 										Deselect all</span></li> -->
@@ -61,7 +62,8 @@
 									ng-repeat="definition in definitions | filter:isType('activity')">
 									<label><input type="checkbox" class="button"
 										ng-model="definition.toggle" ng-change="toggle(definition)" />
-										<span class="button">{{definition.label}}</span></label>
+										<span class="button">{{definition.label}}</span>
+										<span><img class="question-icon" src="./static/images/question_green.gif"></span></label>
 								</li>
 <!-- 								<li><span class="batch-selector"> Select all / -->
 <!-- 										Deselect all</span></li> -->
@@ -74,7 +76,8 @@
 									ng-repeat="definition in definitions | filter:isType('mobility')">
 									<label><input type="checkbox" class="button"
 										ng-model="definition.toggle" ng-change="toggle(definition)" />
-										<span class="button">{{definition.label}}</span></label>
+										<span class="button">{{definition.label}}</span>
+										<span><img class="question-icon" src="./static/images/question_purple.gif"></span></label>
 								</li>
 							</ul></li>
 					</ul>
